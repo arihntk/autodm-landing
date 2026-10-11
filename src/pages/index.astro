@@ -63,4 +63,51 @@ import Layout from "../layouts/Layout.astro";
       </div>
     </div>
   </section>
+
+  <!-- ================= 1. DEMO / IG ================= -->
+  <section class="section" id="demo">
+    <div class="kicker rv">1. Live demo — Instagram</div>
+    <h2 class="h2 rv">Watch AutoDM sell like your best rep. <span class="gray">Real context. Real answers. Instantly.</span></h2>
+    <p class="lede rv">A customer DMs at midnight about a product. AutoDM pulls live Shopify inventory, shipping rules, reviews and past orders — then answers, recommends, discounts and closes. No scripts. No waiting.</p>
+
+    <div class="demo-grid">
+      <div class="check-card rv">
+        <h3>What just happened in that chat →</h3>
+        <p>Every reply is grounded in your live business context — not a generic chatbot guess.</p>
+        <div class="check"><span class="tick">✓</span><div><b>Live working context, fetched in real time</b><small>Inventory, variants, pricing, shipping, returns, tracking — from Shopify + your docs.</small></div></div>
+        <div class="check"><span class="tick">✓</span><div><b>Personalised selling</b><small>Recommends a shade from skin type + last order + 2,300 reviews.</small></div></div>
+        <div class="check"><span class="tick">✓</span><div><b>Objections → checkout</b><small>Makeup layering, returns, student discount — handled, then a reserved checkout link.</small></div></div>
+        <div class="check"><span class="tick">✓</span><div><b>Human escalation, armed</b><small>Complex or angry? A human is looped in with the full transcript + order context.</small></div></div>
+        <div class="ctx-row">
+          <span class="ctx">◉ shopify: 14 units · Medium/Dewy</span>
+          <span class="ctx">◉ klaviyo: repeat buyer</span>
+          <span class="ctx">◉ policy: 30-day returns</span>
+          <span class="ctx">◉ ship: Mumbai 2–3d</span>
+        </div>
+      </div>
+
+      <div class="rv">
+        <div class="phone-wrap">
+          <div class="phone">
+            <div class="screen">
+              <div class="ig-top">
+                <div class="ig-status"><span>9:41</span><span>●●● ▮</span></div>
+                <div class="ig-profile">
+                  <div class="avatar"><div class="avatar-inner">G</div></div>
+                  <div><div class="ig-name">glowhaus ✓</div><div class="ig-active">Active now · replies instantly</div></div>
+                  <span class="ig-live">✦ auto</span>
+                </div>
+              </div>
+              <div class="chat" id="chat" aria-live="polite"></div>
+              <div class="ig-input"><div class="field">Message…</div><span class="ig-heart">♡</span></div>
+            </div>
+          </div>
+        </div>
+        <div class="chat-controls">
+          <button class="ghost-btn" id="replay">↻ Replay conversation</button>
+          <div class="float-note" id="chat-status">● live · median reply 8s</div>
+        </div>
+      </div>
+    </div>
+  </section>
 </Layout>
