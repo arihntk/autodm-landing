@@ -248,4 +248,84 @@ import Layout from "../layouts/Layout.astro";
     <div class="giant">autodm <span class="eq">=</span></div>
     <div class="foot-base"><span>© 2026 AutoDM · Automated sales & support where your customers are</span><span>Instagram · Email · WhatsApp · Chatbot · Shopify</span></div>
   </footer>
+
+  <script is:inline>
+    // ---------- Instagram DM animation ----------
+    const chat = document.getElementById('chat');
+    const status = document.getElementById('chat-status');
+    const script = [
+      { from: 'them', text: 'hey!! is the Midnight Silk Serum back in stock? 😭' },
+      { from: 'me', text: 'Hi Maya! Yes — restocked this morning in all 3 shades ✨ Want help picking yours?' },
+      { from: 'them', text: 'yes pls! combination skin, shade medium? + shipping time to Mumbai?' },
+      { from: 'sys', text: '⚡ fetched Shopify · inventory + shipping + past orders' },
+      { from: 'me', text: 'Perfect — Medium / Dewy is your match for combination skin (loved in 2,300+ reviews + your last order). 14 units left. Mumbai delivery in 2–3 days, free over ₹999.' },
+      { from: 'product' },
+      { from: 'them', text: 'does it sit well under makeup? and returns?' },
+      { from: 'me', text: 'Yes — 92% say it layers cleanly under makeup. 30-day no-questions returns with prepaid pickup 🤝' },
+      { from: 'them', text: 'ok sold 😭 can i get 10% off? student budget lol' },
+      { from: 'me', text: 'Done — STUDENT10 applied (−₹189). Reserved for 30 min 👇\nglowhaus.co/checkout/GH-8421' },
+      { from: 'them', text: 'ordered!! thank you 🖤' },
+      { from: 'me', text: 'Order #GH-8421 confirmed 🎉 Tracking here + email. I stay on — a human joins instantly if you ever need one.' },
+      { from: 'sys', text: '✓ resolved by AI in 41s · link clicked · escalation armed' },
+    ];
+    function el(html, cls) { const d = document.createElement('div'); d.className = cls; d.innerHTML = html; return d; }
+    function esc(s){ return s.replace(/&/g,'&amp;').replace(/</g,'&lt;'); }
+    function addMsg(m) {
+      if (m.from === 'sys') { chat.appendChild(el(esc(m.text), 'sys')); }
+      else if (m.from === 'product') {
+        const c = document.createElement('div'); c.className = 'product-card';
+        c.innerHTML = '<div class="product-img">🧴</div><div class="product-body"><b>Midnight Silk Serum — Medium / Dewy</b><p>₹1,899 · ★ 4.8 (2,312) · In stock</p><a class="product-btn" href="#demo">View product</a></div>';
+        chat.appendChild(c);
+      } else {
+        const b = el(esc(m.text).replace(/\n/g,'<br>') + '<span class="meta">' + (m.from==='me' ? 'glowhaus · auto · now' : 'Maya · now') + '</span>', 'bubble ' + m.from);
+        chat.appendChild(b);
+      }
+      chat.scrollTop = chat.scrollHeight;
+    }
+    let runId = 0;
+    async function play() {
+      const id = ++runId;
+      chat.innerHTML = '';
+      status.textContent = '● typing…';
+      await new Promise(r => setTimeout(r, 700));
+      for (const m of script) {
+        if (id !== runId) return;
+        if (m.from === 'me') {
+          const t = document.createElement('div'); t.className = 'typing'; t.innerHTML = '<i></i><i></i><i></i>';
+          chat.appendChild(t); chat.scrollTop = chat.scrollHeight;
+          status.textContent = '● autodm is typing…';
+          await new Promise(r => setTimeout(r, 850 + Math.random()*500));
+          if (id !== runId) return;
+          t.remove();
+        } else {
+          await new Promise(r => setTimeout(r, 650));
+          if (id !== runId) return;
+        }
+        addMsg(m);
+        status.textContent = m.from === 'sys' ? '⚡ live context synced' : '● live · median reply 8s';
+      }
+      status.textContent = '✓ resolved · replay ↻';
+      await new Promise(r => setTimeout(r, 6000));
+      if (id !== runId) return;
+      play();
+    }
+    document.getElementById('replay').addEventListener('click', play);
+    const cio = new IntersectionObserver((es) => es.forEach(e => { if (e.isIntersecting) { play(); cio.disconnect(); } }), { threshold: 0.3 });
+    chat && cio.observe(chat);
+
+    // ---------- animated counters ----------
+    function animCount(node) {
+      const target = parseFloat(node.dataset.count); const dec = parseInt(node.dataset.dec || '0');
+      const dur = 1400; const t0 = performance.now();
+      function tick(t) {
+        const p = Math.min(1, (t - t0) / dur); const e = 1 - Math.pow(1 - p, 3);
+        const v = target * e;
+        node.textContent = dec ? v.toFixed(dec) : Math.round(v).toLocaleString('en-US');
+        if (p < 1) requestAnimationFrame(tick);
+      }
+      requestAnimationFrame(tick);
+    }
+    const nio = new IntersectionObserver((es) => es.forEach(e => { if (e.isIntersecting) { animCount(e.target); nio.unobserve(e.target); } }), { threshold: 0.5 });
+    document.querySelectorAll('[data-count]').forEach(n => nio.observe(n));
+  </script>
 </Layout>
