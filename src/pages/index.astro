@@ -1,0 +1,33 @@
+---
+import Layout from "../layouts/Layout.astro";
+---
+
+<Layout>
+  <!-- ================= NAV ================= -->
+  <header class="nav" id="nav">
+    <div class="nav-inner">
+      <a class="logo" href="#top"><span class="logo-mark">=</span> autodm</a>
+      <nav class="nav-links">
+        <a href="#demo">Demo</a>
+        <a href="#dashboard">Dashboard</a>
+        <a href="#benefits">Why AutoDM</a>
+        <a href="#pricing">Pricing</a>
+      </nav>
+      <div class="nav-right">
+        <a class="signin" href="#pricing">Sign in</a>
+        <form class="nav-pill" data-capture>
+          <input type="email" placeholder="Enter email" aria-label="Enter email" required />
+          <button class="btn" type="submit">Get a demo</button>
+        </form>
+        <button class="hamburger" id="ham" aria-label="Menu">☰</button>
+      </div>
+    </div>
+    <div class="mobile-menu" id="mm">
+      <a href="#demo">Demo</a>
+      <a href="#dashboard">Dashboard</a>
+      <a href="#benefits">Why AutoDM</a>
+      <a href="#pricing">Pricing</a>
+      <a href="#pricing" class="btn">Get a demo</a>
+    </div>
+  </header>
+</Layout>
