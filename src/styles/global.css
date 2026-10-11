@@ -337,6 +337,7 @@ svg { display: block; }
   .section { padding: 56px 18px 8px; }
   .ctx-grid { grid-template-columns: 1fr; }
   .chat { overflow: hidden; touch-action: pan-y; }
+  .screen { height: auto; max-height: 78vh; }
   .main { padding: 14px; }
   .bgrid { grid-template-columns: 1fr; }
   .contact { padding: 64px 18px 72px; }
@@ -352,5 +353,10 @@ svg { display: block; }
   .btn-big { font-size: 14.5px; padding: 12px 20px; }
   .check-card { padding: 20px 18px; }
   .why-foot { gap: 14px; }
+}
+@media (max-width: 480px) {
+  .email-form { flex-direction: column; align-items: stretch; gap: 8px; border-radius: 26px; padding: 8px; }
+  .email-form input { padding: 12px 18px; text-align: center; }
+  .email-form .btn { width: 100%; }
 }
 @media (min-width: 761px) { .mobile-menu { display: none !important; } }
