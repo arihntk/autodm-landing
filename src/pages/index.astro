@@ -328,4 +328,47 @@ const telegramChatId = import.meta.env.PUBLIC_TELEGRAM_CHAT_ID ?? "";
     const nio = new IntersectionObserver((es) => es.forEach(e => { if (e.isIntersecting) { animCount(e.target); nio.unobserve(e.target); } }), { threshold: 0.5 });
     document.querySelectorAll('[data-count]').forEach(n => nio.observe(n));
   </script>
+
+  <script is:inline define:vars={{ telegramBotToken, telegramChatId }}>
+    // lead capture: posts each email to Telegram, falls back to local queue when not configured
+    document.querySelectorAll('form[data-capture]').forEach((f) => {
+      f.addEventListener('submit', async (ev) => {
+        ev.preventDefault();
+        const form = ev.currentTarget;
+        const input = form.querySelector('input[type="email"]');
+        const email = (input && input.value || '').trim();
+        if (!email || !/^[^@\s]+@[^@\s]+\.[^@\s]+$/.test(email)) { if (input) { input.focus(); input.style.borderColor = 'red'; } return; }
+        const btn = form.querySelector('button');
+        const original = btn ? btn.textContent : '';
+        if (btn) { btn.disabled = true; btn.textContent = 'Sending...'; }
+        const section = form.closest('section');
+        const source = section && section.id ? section.id : 'top';
+        let sent = false;
+        if (telegramBotToken && telegramChatId) {
+          try {
+            const text = 'New demo request\nEmail: ' + email + '\nForm: ' + source + '\nPage: ' + location.href + '\nTime: ' + new Date().toISOString();
+            const res = await fetch('https://api.telegram.org/bot' + telegramBotToken + '/sendMessage', {
+              method: 'POST',
+              headers: { 'Content-Type': 'application/json' },
+              body: JSON.stringify({ chat_id: telegramChatId, text: text }),
+            });
+            sent = res.ok;
+          } catch (e) { sent = false; }
+        } else {
+          try { const k = 'autodm_waitlist'; const arr = JSON.parse(localStorage.getItem(k) || '[]'); arr.push({ email: email, at: new Date().toISOString() }); localStorage.setItem(k, JSON.stringify(arr)); } catch (e) {}
+          sent = true;
+        }
+        const wrap = form.parentElement;
+        const okBox = wrap && wrap.querySelector('.form-success');
+        const note = wrap && wrap.querySelector('.form-note');
+        if (sent) {
+          if (okBox) { okBox.style.display = 'block'; okBox.textContent = 'You are on the list. We will reach out for your demo shortly.'; }
+          form.style.display = 'none'; if (note) note.style.display = 'none';
+        } else {
+          if (btn) { btn.disabled = false; btn.textContent = original; }
+          if (okBox) { okBox.style.display = 'block'; okBox.textContent = 'Something failed. Please try again in a moment.'; }
+        }
+      });
+    });
+  </script>
 </Layout>
