@@ -1,37 +1,33 @@
 ---
 import Layout from "../layouts/Layout.astro";
+const telegramBotToken = import.meta.env.PUBLIC_TELEGRAM_BOT_TOKEN ?? "";
+const telegramChatId = import.meta.env.PUBLIC_TELEGRAM_CHAT_ID ?? "";
 ---
 
 <Layout>
-  <!-- ================= NAV ================= -->
   <header class="nav" id="nav">
     <div class="nav-inner">
-      <a class="logo" href="#top"><span class="logo-mark">=</span> autodm</a>
+      <a class="logo" href="#top">autodm</a>
       <nav class="nav-links">
         <a href="#demo">Demo</a>
         <a href="#dashboard">Dashboard</a>
-        <a href="#benefits">Why AutoDM</a>
+        <a href="#benefits">Why autodm</a>
         <a href="#pricing">Pricing</a>
       </nav>
       <div class="nav-right">
-        <a class="signin" href="#pricing">Sign in</a>
-        <form class="nav-pill" data-capture>
-          <input type="email" placeholder="Enter email" aria-label="Enter email" required />
-          <button class="btn" type="submit">Get a demo</button>
-        </form>
+        <a class="btn" href="#pricing">Get a demo</a>
         <button class="hamburger" id="ham" aria-label="Menu">☰</button>
       </div>
     </div>
     <div class="mobile-menu" id="mm">
       <a href="#demo">Demo</a>
       <a href="#dashboard">Dashboard</a>
-      <a href="#benefits">Why AutoDM</a>
+      <a href="#benefits">Why autodm</a>
       <a href="#pricing">Pricing</a>
       <a href="#pricing" class="btn">Get a demo</a>
     </div>
   </header>
 
-  <!-- ================= HERO ================= -->
   <section class="hero" id="top">
     <div class="hero-bg" aria-hidden="true">
       <div class="bar bar-l1"></div><div class="bar bar-l2"></div><div class="bar bar-l3"></div>
@@ -44,7 +40,7 @@ import Layout from "../layouts/Layout.astro";
     </div>
     <div class="hero-inner">
       <h1>Automated sales and support, where your customers are.</h1>
-      <p class="hero-sub">AutoDM places AI sales &amp; support agents inside your Instagram DMs, email, WhatsApp and chatbot — with your Shopify store and custom data fetched in real time. Escalates to humans when it matters. Tailored to your brand.</p>
+      <p class="hero-sub">Agents for Instagram, Email, WhatsApp and Chat. They know your store, reply in seconds and bring in a human when it counts.</p>
       <div>
         <form class="email-form" data-capture>
           <input type="email" placeholder="Enter your work email" aria-label="Enter your work email" required />
