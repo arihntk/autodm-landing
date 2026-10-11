@@ -276,7 +276,13 @@ const telegramChatId = import.meta.env.PUBLIC_TELEGRAM_CHAT_ID ?? "";
     ];
     function el(html, cls) { const d = document.createElement('div'); d.className = cls; d.innerHTML = html; return d; }
     function esc(s){ return s.replace(/&/g,'&amp;').replace(/</g,'&lt;'); }
-    function smoothBottom() { try { chat.scrollTo({ top: chat.scrollHeight, behavior: 'smooth' }); } catch(e) { chat.scrollTop = chat.scrollHeight; } }
+    const isTouch = window.matchMedia('(pointer: coarse)').matches;
+    function smoothBottom() {
+      try {
+        if (isTouch) { chat.scrollTop = chat.scrollHeight; }
+        else { chat.scrollTo({ top: chat.scrollHeight, behavior: 'smooth' }); }
+      } catch(e) { try { chat.scrollTop = chat.scrollHeight; } catch(_e) {} }
+    }
     function addMsg(m) {
       if (m.from === 'date') { chat.appendChild(el(esc(m.text), 'date-chip')); }
       else if (m.from === 'me') {
