@@ -1,6 +1,6 @@
 ---
 interface Props { title?: string; description?: string; }
-const { title = "AutoDM — Automated sales and support, where your customers are", description = "AutoDM builds sales and support agents for brands and creators. Instagram, Email, WhatsApp, chatbots, Shopify + custom sources — with real-time context and human escalation." } = Astro.props;
+const { title = "autodm | Automated Sales and Support", description = "autodm builds sales and support agents for brands and creators. Instagram, email, WhatsApp, chatbots, Shopify and custom sources with live context and human backup." } = Astro.props;
 import "../styles/global.css";
 ---
 <!doctype html>
@@ -27,23 +27,6 @@ import "../styles/global.css";
       // reveal
       const io = new IntersectionObserver((es) => es.forEach(e => { if (e.isIntersecting) { e.target.classList.add('in'); io.unobserve(e.target); } }), { threshold: 0.12 });
       document.querySelectorAll('.rv').forEach(el => io.observe(el));
-      // email forms (front-end only — wire to backend later)
-      document.querySelectorAll('form[data-capture]').forEach((f) => {
-        f.addEventListener('submit', (ev) => {
-          ev.preventDefault();
-          const form = ev.currentTarget;
-          const input = form.querySelector('input[type="email"]');
-          const email = (input && input.value || '').trim();
-          if (!email || !/^[^@\s]+@[^@\s]+\.[^@\s]+$/.test(email)) { input && input.focus(); input && (input.style.borderColor = 'red'); return; }
-          try { const k='autodm_waitlist'; const arr=JSON.parse(localStorage.getItem(k)||'[]'); arr.push({email, at:new Date().toISOString()}); localStorage.setItem(k, JSON.stringify(arr)); } catch(e){}
-          const wrap = form.parentElement;
-          const ok = wrap && wrap.querySelector('.form-success');
-          const note = wrap && wrap.querySelector('.form-note');
-          if (ok) { ok.style.display='block'; ok.textContent = "You're on the list — we'll reach out for your demo shortly."; }
-          else { const b = form.querySelector('button'); b && (b.textContent = '✓ You\'re in'); input.value=''; return; }
-          form.style.display='none'; if (note) note.style.display='none';
-        });
-      });
     </script>
   </body>
 </html>
