@@ -53,38 +53,27 @@ svg { display: block; }
   display: flex; align-items: center; justify-content: space-between;
   padding: 14px 28px; gap: 16px;
 }
-.logo { font-weight: 700; font-size: 26px; letter-spacing: -0.03em; text-decoration: none; display: flex; align-items: center; gap: 10px; }
-.logo-mark { font-family: var(--mono); font-weight: 700; }
+.logo { font-weight: 800; font-size: 25px; letter-spacing: -0.04em; text-decoration: none; }
 .nav-links { display: flex; gap: 28px; font-size: 15px; font-weight: 500; }
-.nav-links a { text-decoration: none; opacity: .9; }
+.nav-links a { text-decoration: none; opacity: .85; }
 .nav-links a:hover { opacity: 1; text-decoration: underline; text-underline-offset: 4px; }
 .nav-right { display: flex; align-items: center; gap: 16px; }
-.signin { font-size: 15px; font-weight: 500; text-decoration: none; }
-.nav-pill {
-  display: flex; align-items: center; gap: 8px;
-  background: #fff; border: 1px solid var(--line);
-  border-radius: 999px; padding: 5px 5px 5px 18px;
-  box-shadow: var(--shadow-sm);
-}
-.nav-pill input {
-  border: 0; outline: 0; background: transparent;
-  font: inherit; font-size: 14px; width: 130px; color: var(--ink);
-}
 .btn {
   appearance: none; border: 0; cursor: pointer;
   background: var(--purple); color: #fff;
-  font: inherit; font-weight: 600; font-size: 14px;
+  font-family: var(--sans); font-weight: 600; font-size: 14px;
   padding: 10px 20px; border-radius: 999px;
   transition: transform .15s, background .2s, box-shadow .2s;
   white-space: nowrap; text-decoration: none; display: inline-flex; align-items: center; justify-content: center;
 }
 .btn:hover { background: var(--purple-dark); transform: translateY(-1px); box-shadow: 0 8px 24px -8px rgba(150,100,214,.7); }
 .btn:active { transform: translateY(0); }
-.btn-big { font-size: 17px; padding: 14px 30px; }
-.hamburger { display: none; background: none; border: 0; font-size: 24px; cursor: pointer; }
+.btn-big { font-size: 16px; padding: 13px 28px; }
+.hamburger { display: none; background: none; border: 0; font-size: 24px; cursor: pointer; color: var(--ink); }
+.mobile-menu { display: none; }
 
 /* ---------- hero ---------- */
-.hero { position: relative; overflow: clip; padding: 150px 24px 70px; text-align: center; }
+.hero { position: relative; overflow: clip; padding: 148px 24px 64px; text-align: center; }
 .hero-bg { position: absolute; inset: 0; pointer-events: none; }
 .bar { position: absolute; border-radius: 1px; }
 .bar-l1 { left: 0; top: 12%; width: 64px; height: 42px; background: linear-gradient(90deg,#d8c4ef,#e9ddf5); }
