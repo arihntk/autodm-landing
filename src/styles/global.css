@@ -337,7 +337,7 @@ svg { display: block; }
   .section { padding: 56px 18px 8px; }
   .ctx-grid { grid-template-columns: 1fr; }
   .chat { overflow: hidden; touch-action: pan-y; }
-  .screen { height: auto; max-height: 78vh; }
+  .screen { height: 600px; max-height: none; }
   .main { padding: 14px; }
   .bgrid { grid-template-columns: 1fr; }
   .contact { padding: 64px 18px 72px; }
