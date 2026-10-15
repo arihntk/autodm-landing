@@ -374,7 +374,7 @@ svg { display: block; }
 
 /* dark band: rounded glowing panel, distinct from the light sections */
 .dark-band { background: transparent; padding: 0 28px; margin-top: 70px; }
-.band-inner { max-width: 1240px; margin: 0 auto; padding: 78px 56px; min-width: 0; color: #fff; border-radius: 32px; background: radial-gradient(640px 320px at 12% 8%, rgba(150,100,214,.20), transparent 60%), radial-gradient(560px 300px at 88% 92%, rgba(255,75,30,.10), transparent 60%), #0d0d0d; }
+.band-inner { max-width: 1240px; margin: 0 auto; padding: 78px 56px; min-width: 0; color: #fff; overflow: clip; border-radius: 32px; background: radial-gradient(640px 320px at 12% 8%, rgba(150,100,214,.20), transparent 60%), radial-gradient(560px 300px at 88% 92%, rgba(255,75,30,.10), transparent 60%), #0d0d0d; }
 .dark-band .h2 { color: #fff; }
 .dark-band .h2 .gray { color: #a39c8d; }
 .dark-band .lede { color: #b3aca0; }
@@ -385,9 +385,11 @@ svg { display: block; }
 
 /* light and tint bands: same panel language, different moods */
 .light-band { background: transparent; padding: 0 28px; margin-top: 70px; }
-.light-inner { background: #fffdf7; border: 1px solid var(--line); border-radius: 32px; padding: 78px 56px; box-shadow: 0 24px 70px -44px rgba(13,13,13,.28); }
+.light-inner { background: #fffdf7; border: 1px solid var(--line); border-radius: 32px; padding: 78px 56px; box-shadow: 0 24px 70px -44px rgba(13,13,13,.28); color: #0d0d0d; overflow: clip; }
+.light-inner .h2 { color: #0d0d0d; }
 .tint-band { background: transparent; padding: 0 28px; margin-top: 70px; }
-.tint-inner { background: #ECE1F6; border-radius: 32px; padding: 78px 56px; }
+.tint-inner { background: #ECE1F6; border-radius: 32px; padding: 78px 56px; color: #0d0d0d; overflow: clip; }
+.tint-inner .h2 { color: #0d0d0d; }
 /* why cards: depth instead of flat */
 #benefits .bcard { background: linear-gradient(180deg,#221d18,#0d0d0d); border-color: rgba(255,255,255,.14); box-shadow: 0 24px 60px -24px rgba(124,75,196,.5); }
 #benefits .b-eyebrow { color: #a39c8d; }
