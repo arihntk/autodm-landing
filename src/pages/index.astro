@@ -511,8 +511,17 @@ const telegramChatId = import.meta.env.PUBLIC_TELEGRAM_CHAT_ID ?? "";
         if (m.s) { modalThread.appendChild(el(esc(m.s), 'modal-sys')); }
         else { modalThread.appendChild(el(esc(m.t || m.m), 'bubble ' + (m.m ? 'me' : 'them'))); }
       });
+    function showModal() {
+      if (!modalOv) return;
       modalOv.hidden = false;
       document.body.style.overflow = 'hidden';
+    }
+    function openList(title, sub, rows) {
+      if (!modalOv) return;
+      document.getElementById('modal-title').textContent = title;
+      document.getElementById('modal-sub').textContent = sub;
+      modalThread.innerHTML = rows.map((r) => '<div class="mrow"><span class="mdot"></span><div><b>' + esc(r[0]) + '</b><small>' + esc(r[1]) + '</small></div></div>').join('');
+      showModal();
     }
     function closeModal() {
       if (!modalOv) return;
@@ -526,13 +535,70 @@ const telegramChatId = import.meta.env.PUBLIC_TELEGRAM_CHAT_ID ?? "";
     modalX && modalX.addEventListener('click', closeModal);
     modalOv && modalOv.addEventListener('click', (ev) => { if (ev.target === modalOv) closeModal(); });
     document.addEventListener('keydown', (ev) => { if (ev.key === 'Escape') closeModal(); });
+    function setText(id, v) { const n = document.getElementById(id); if (n) n.textContent = v; }
+    function setFilter(f) {
+      document.querySelectorAll('.tbl-f').forEach((x) => x.classList.toggle('on', x.dataset.f === f));
+      document.querySelectorAll('.table tbody tr').forEach((tr) => {
+        tr.classList.toggle('hide', f !== 'all' && tr.dataset.ch !== f);
+      });
+    }
     document.querySelectorAll('.tbl-f').forEach((b) => {
+      b.addEventListener('click', () => setFilter(b.dataset.f));
+    });
+    function setSide(active) {
+      document.querySelectorAll('.side-item, .side-status').forEach((x) => x.classList.toggle('on', x === active));
+    }
+    const SOURCES = [
+      ['Shopify', '2,140 products synced 2 min ago'],
+      ['Instagram', 'Connected, comments and DMs on'],
+      ['Email', 'Connected, support inbox on'],
+      ['WhatsApp', 'Connected, bot number on'],
+      ['Telegram', 'Connected, bot on'],
+      ['Docs', '48 help pages indexed'],
+    ];
+    const HUMANS = [
+      ['Priya Sharma', 'Online, takes escalations'],
+      ['Arjun Mehta', 'Online, takes VIP chats'],
+      ['Plus 32 agents', 'On shift across channels'],
+    ];
+    document.querySelectorAll('.side-item[data-f]').forEach((s) => {
+      s.addEventListener('click', () => { setSide(s); setFilter(s.dataset.f); });
+    });
+    document.querySelectorAll('.side-item[data-view], .side-status[data-view]').forEach((s) => {
+      s.addEventListener('click', () => {
+        setSide(s);
+        const v = s.dataset.view;
+        if (v === 'overview') { setFilter('all'); }
+        else if (v === 'inbox') { setFilter('all'); const p = document.getElementById('threads-panel'); p && p.scrollIntoView({ behavior: 'smooth', block: 'center' }); }
+        else if (v === 'sources') { openList('Connected sources', 'Live and syncing', SOURCES); }
+        else if (v === 'humans') { openList('Humans on shift', '34 agents behind the AI', HUMANS); }
+      });
+    });
+    document.querySelectorAll('.seg').forEach((s) => {
+      const leg = document.querySelector('.leg[data-i="' + s.dataset.i + '"]');
+      s.addEventListener('mouseenter', () => { s.classList.add('hot'); leg && leg.classList.add('hot'); });
+      s.addEventListener('mouseleave', () => { s.classList.remove('hot'); leg && leg.classList.remove('hot'); });
+    });
+    const RANGES = {
+      30: { conv: '18,429', ai: '94.2', clicks: '7,812', sales: '128.4', dConv: '▲ 18.2% this month', dAi: '▲ 3.1 pts · no human needed', dClicks: '▲ 24% · product links', dSales: '● 5.8% to humans', title: 'Conversations · last 30 days', aiN: '17,364', escN: '1,065',
+        line: 'M0,140 C40,132 60,110 90,108 C120,106 140,120 170,112 C200,104 220,70 250,68 C280,66 300,90 330,84 C360,78 380,50 410,48 C440,46 470,60 500,52 C525,46 545,30 560,28', dot: [410, 48] },
+      7: { conv: '4,318', ai: '93.8', clicks: '1,874', sales: '31.6', dConv: '▲ 6.4% this week', dAi: '▲ 1.2 pts · no human needed', dClicks: '▲ 9% · product links', dSales: '● 6.2% to humans', title: 'Conversations · last 7 days', aiN: '4,050', escN: '268',
+        line: 'M0,150 C50,145 80,130 120,128 C160,126 190,135 230,120 C270,105 310,110 350,95 C390,80 430,90 470,75 C500,65 530,70 560,55', dot: [470, 75] },
+    };
+    document.querySelectorAll('.range').forEach((b) => {
       b.addEventListener('click', () => {
-        document.querySelectorAll('.tbl-f').forEach((x) => x.classList.toggle('on', x === b));
-        const f = b.dataset.f;
-        document.querySelectorAll('.table tbody tr').forEach((tr) => {
-          tr.classList.toggle('hide', f !== 'all' && tr.dataset.ch !== f);
-        });
+        document.querySelectorAll('.range').forEach((x) => x.classList.toggle('on', x === b));
+        const r = RANGES[b.dataset.r];
+        if (!r) return;
+        setText('k-conv', r.conv); setText('k-ai', r.ai); setText('k-clicks', r.clicks); setText('k-sales', r.sales);
+        setText('k-conv-d', r.dConv); setText('k-ai-d', r.dAi); setText('k-clicks-d', r.dClicks); setText('k-sales-d', r.dSales);
+        setText('chart-title', r.title); setText('ch-ai', r.aiN); setText('ch-esc', r.escN);
+        const line = document.getElementById('area-line');
+        const fill = document.getElementById('area-fill');
+        const dot = document.getElementById('area-dot');
+        if (line) line.setAttribute('d', r.line);
+        if (fill) fill.setAttribute('d', r.line + ' L560,180 L0,180 Z');
+        if (dot) { dot.setAttribute('cx', r.dot[0]); dot.setAttribute('cy', r.dot[1]); }
       });
     });
   </script>
