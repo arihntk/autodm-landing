@@ -238,8 +238,7 @@ svg { display: block; }
 .tabs { display: flex; gap: 8px; justify-content: center; margin: 0 0 22px; flex-wrap: wrap; }
 .tab { appearance: none; border: 1px solid var(--line); background: #fff; border-radius: 999px; padding: 10px 24px; font-family: var(--sans); font-size: 14px; font-weight: 600; cursor: pointer; color: var(--ink); }
 .tab.on { background: #0d0d0d; color: #fff; border-color: #0d0d0d; }
-.bubble .meta { display: block; margin-top: 4px; font-size: 10px; font-weight: 500; opacity: .7; }
-.bubble .meta.ticks { color: #53bdeb; opacity: 1; font-weight: 700; font-size: 12px; }
+.bubble .ticks { float: right; font-size: 11px; font-weight: 700; letter-spacing: -2px; margin: 7px 0 0 8px; color: #53bdeb; }
 /* whatsapp chrome */
 .screen[data-ch="whatsapp"] .ig-head { background: #F0F2F5; }
 .screen[data-ch="whatsapp"] .avatar { background: #00A884; }
@@ -263,7 +262,7 @@ svg { display: block; }
 .screen[data-ch="telegram"] .chat { background: #E8EBF0; }
 .screen[data-ch="telegram"] .bubble.them { background: #fff; }
 .screen[data-ch="telegram"] .bubble.me { background: #E2F7D5; color: #111; }
-.screen[data-ch="telegram"] .bubble .meta.ticks { color: #3390EC; }
+.screen[data-ch="telegram"] .bubble .ticks { color: #3390EC; }
 .screen[data-ch="telegram"] .typing { background: #E4E6EB; }
 .screen[data-ch="telegram"] .typing i { background: #8e8e8e; }
 
