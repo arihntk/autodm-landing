@@ -258,6 +258,27 @@ svg { display: block; }
 .mail-time { margin-left: auto; font-size: 11px; color: #8e8e8e; flex: none; }
 .mail-sub { font-size: 13.5px; font-weight: 650; margin: 0 0 4px; }
 .mail-body { font-size: 13.5px; line-height: 1.5; color: #333; margin: 0; }
+/* telegram chrome: dark mode */
+.screen[data-ch="telegram"] .ig-status { background: #17212B; color: #fff; }
+.screen[data-ch="telegram"] .sig i { background: #fff; }
+.screen[data-ch="telegram"] .batt { border-color: #fff; }
+.screen[data-ch="telegram"] .batt::after { background: #fff; }
+.screen[data-ch="telegram"] .ig-head { background: #17212B; border-bottom-color: #0E1621; }
+.screen[data-ch="telegram"] .back { color: #fff; }
+.screen[data-ch="telegram"] .avatar { background: #229ED9; }
+.screen[data-ch="telegram"] .ig-name { color: #fff; }
+.screen[data-ch="telegram"] .ig-active { color: #7F91A4; }
+.screen[data-ch="telegram"] .ig-tools svg { stroke: #8B9BA8; }
+.screen[data-ch="telegram"] .chat { background: #0E1621; }
+.screen[data-ch="telegram"] .date-chip { background: #242F3D; color: #B9C4CE; }
+.screen[data-ch="telegram"] .bubble.them { background: #182533; color: #fff; }
+.screen[data-ch="telegram"] .bubble.me { background: #2B5278; color: #fff; }
+.screen[data-ch="telegram"] .bubble .meta.ticks { color: #5CA8E0; }
+.screen[data-ch="telegram"] .typing { background: #2B5278; }
+.screen[data-ch="telegram"] .typing i { background: #fff; }
+.screen[data-ch="telegram"] .ig-input { background: #17212B; border-top-color: #0E1621; }
+.screen[data-ch="telegram"] .ig-input .field { background: #242F3D; border-color: #242F3D; color: #7F91A4; }
+.screen[data-ch="telegram"] .ig-ico svg { stroke: #8B9BA8; }
 
 /* browser + dashboard, minimal */
 .browser { background: #fff; border: 1px solid var(--line); border-radius: 18px; overflow: hidden; box-shadow: var(--shadow); min-width: 0; }

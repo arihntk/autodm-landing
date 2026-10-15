@@ -74,6 +74,7 @@ const telegramChatId = import.meta.env.PUBLIC_TELEGRAM_CHAT_ID ?? "";
     <div class="tabs rv" role="tablist" aria-label="Channels">
       <button class="tab on" data-ch="instagram" role="tab">Instagram</button>
       <button class="tab" data-ch="whatsapp" role="tab">WhatsApp</button>
+      <button class="tab" data-ch="telegram" role="tab">Telegram</button>
       <button class="tab" data-ch="email" role="tab">Email</button>
     </div>
 
@@ -341,6 +342,10 @@ const telegramChatId = import.meta.env.PUBLIC_TELEGRAM_CHAT_ID ?? "";
         + '<div class="avatar"><div class="avatar-inner">G</div></div>'
         + '<div class="ig-id"><div class="ig-name">glowhaus ' + VERIFIED + '</div><div class="ig-active">online</div></div>'
         + TOOLS,
+      telegram: '<span class="back">‹</span>'
+        + '<div class="avatar"><div class="avatar-inner">G</div></div>'
+        + '<div class="ig-id"><div class="ig-name">glowhaus ' + VERIFIED + '</div><div class="ig-active">online</div></div>'
+        + TOOLS,
       email: '<span class="back">‹</span>'
         + '<div class="avatar" style="background:#0d0d0d"><div class="avatar-inner">G</div></div>'
         + '<div class="ig-id"><div class="ig-name">Inbox</div><div class="ig-active">glowhaus support</div></div>'
@@ -369,6 +374,15 @@ const telegramChatId = import.meta.env.PUBLIC_TELEGRAM_CHAT_ID ?? "";
         { them: 'ordered, thank you!' },
         { me: 'Confirmed. Tracking will reach you here and on email.' },
       ],
+      telegram: [
+        { date: 'Today' },
+        { them: 'hi! do you ship to Delhi?' },
+        { me: 'Hi! Yes, Delhi delivery takes 2 days. Want the shade link for Medium Dewy?' },
+        { them: 'yes! and any first order code?' },
+        { me: 'FIRST10 takes 10% off. Your link: glowhaus.co/checkout/TG114' },
+        { them: 'ordered. thanks!' },
+        { me: 'Confirmed. I will send tracking here the moment it ships.' },
+      ],
       email: [
         { date: 'Today' },
         { mail: 1, who: 'Maya', ini: 'M', time: '9:12 AM', sub: 'Shade help for Midnight Silk Serum', body: 'Hi team, I have combo skin. Which shade suits me? Also, how long is delivery to Mumbai?' },
@@ -396,7 +410,7 @@ const telegramChatId = import.meta.env.PUBLIC_TELEGRAM_CHAT_ID ?? "";
       if (m.date) { track.appendChild(el(esc(m.date), 'date-chip')); }
       else if (m.mail) { addMail(m); return; }
       else if (m.me) {
-        const meta = ch === 'whatsapp' ? '<span class="meta ticks">✓✓</span>' : '';
+        const meta = (ch === 'whatsapp' || ch === 'telegram') ? '<span class="meta ticks">✓✓</span>' : '';
         track.appendChild(el(esc(m.text) + meta, 'bubble me'));
       } else {
         track.appendChild(el(esc(m.text), 'bubble them'));
