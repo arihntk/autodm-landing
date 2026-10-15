@@ -165,10 +165,12 @@ svg { display: block; }
 .check-eyebrow { font-family: var(--mono); font-size: 11.5px; font-weight: 600; letter-spacing: .12em; color: var(--muted); margin-bottom: 10px; }
 .check-card h3 { margin: 0 0 6px; font-size: 21px; font-weight: 700; letter-spacing: -0.015em; }
 .check-card > p { color: var(--muted); font-size: 14.5px; line-height: 1.6; margin: 0 0 8px; }
-.check { display: flex; gap: 12px; padding: 13px 0; border-top: 1px solid var(--hairline); font-size: 14.5px; line-height: 1.5; }
-.check b { display: block; font-size: 14.5px; font-weight: 650; }
-.check small { color: var(--muted); font-size: 13.5px; }
+.why-list { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-top: 16px; }
+.why-item { display: flex; gap: 11px; background: #faf8f2; border: 1px solid var(--line); border-radius: 14px; padding: 15px 16px; min-width: 0; }
+.why-item b { display: block; font-size: 14px; font-weight: 700; margin-bottom: 3px; }
+.why-item small { color: var(--muted); font-size: 13px; line-height: 1.55; }
 .tick { flex: none; width: 24px; height: 24px; border-radius: 99px; background: #0d0d0d; color: #fff; display: grid; place-items: center; font-size: 13px; margin-top: 1px; }
+@media (max-width: 560px) { .why-list { grid-template-columns: 1fr; } }
 .ctx-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; margin-top: 16px; }
 .ctx-grid > * { min-width: 0; }
 .ctx {
