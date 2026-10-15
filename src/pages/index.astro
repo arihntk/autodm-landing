@@ -96,7 +96,7 @@ const telegramChatId = import.meta.env.PUBLIC_TELEGRAM_CHAT_ID ?? "";
                   <svg viewBox="0 0 24 24" fill="none" stroke="#111" stroke-width="1.8"><path d="M22 16.9v3a2 2 0 0 1-2.2 2 19.8 19.8 0 0 1-8.6-3.1 19.5 19.5 0 0 1-6-6A19.8 19.8 0 0 1 2.1 4.2 2 2 0 0 1 4.1 2h3a2 2 0 0 1 2 1.7c.13.96.36 1.9.7 2.8a2 2 0 0 1-.45 2.1L8.1 9.9a16 16 0 0 0 6 6l1.3-1.3a2 2 0 0 1 2.1-.45c.9.34 1.84.57 2.8.7A2 2 0 0 1 22 16.9z"/></svg>
                 </div>
               </div>
-              <div class="chat" id="chat" aria-live="polite"><div class="chat-track" id="chat-track"></div></div>
+              <div class="chat" id="chat" aria-live="polite"><div class="chat-track" id="chat-track"><div class="date-chip">Today</div><div class="bubble them">hey!! is the Midnight Silk Serum back in stock</div><div class="bubble me">Hi Maya! Yes, restocked this morning in all 3 shades. Want help picking yours</div><div class="bubble them">yes please! combo skin, shade medium? plus shipping time to Mumbai</div></div></div>
               <div class="ig-input">
                 <span class="cam"><svg viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2"><path d="M23 19a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h4l2-3h6l2 3h4a2 2 0 0 1 2 2z"/><circle cx="12" cy="13" r="4"/></svg></span>
                 <div class="field">Message...</div>
@@ -293,11 +293,11 @@ const telegramChatId = import.meta.env.PUBLIC_TELEGRAM_CHAT_ID ?? "";
     <div class="kicker rv">5. FAQ</div>
     <h2 class="h2 rv">Questions, <span class="gray">answered.</span></h2>
     <div class="faq">
-      <details class="faq-item rv" open><summary>Will my account get banned?<span class="faq-plus">+</span></summary><p class="faq-a">No. autodm uses official login flows and approved messaging routes, so your accounts stay safe and compliant.</p></details>
-      <details class="faq-item rv"><summary>Do you need my password?<span class="faq-plus">+</span></summary><p class="faq-a">Never. You connect with official logins and choose exactly what autodm may access. Remove access any time in one click.</p></details>
-      <details class="faq-item rv"><summary>Who decides what autodm may do?<span class="faq-plus">+</span></summary><p class="faq-a">You do. Choose what runs alone, what asks first, and what stays blocked, per channel and per action.</p></details>
-      <details class="faq-item rv"><summary>How is autodm trained on my brand?<span class="faq-plus">+</span></summary><p class="faq-a">We load your catalogue, policies, tone and past conversations. Replies sound like your team from day one and keep improving with your feedback.</p></details>
-      <details class="faq-item rv"><summary>What happens when autodm is unsure?<span class="faq-plus">+</span></summary><p class="faq-a">It hands the chat to a human with full context. No guessing, no awkward replies.</p></details>
+      <details class="faq-item rv" open><summary><span class="faq-q">Will my account get banned?</span><span class="faq-plus">+</span></summary><p class="faq-a">No. autodm uses official login flows and approved messaging routes, so your accounts stay safe and compliant.</p></details>
+      <details class="faq-item rv"><summary><span class="faq-q">Do you need my password?</span><span class="faq-plus">+</span></summary><p class="faq-a">Never. You connect with official logins and choose exactly what autodm may access. Remove access any time in one click.</p></details>
+      <details class="faq-item rv"><summary><span class="faq-q">Who decides what autodm may do?</span><span class="faq-plus">+</span></summary><p class="faq-a">You do. Choose what runs alone, what asks first, and what stays blocked, per channel and per action.</p></details>
+      <details class="faq-item rv"><summary><span class="faq-q">How is autodm trained on my brand?</span><span class="faq-plus">+</span></summary><p class="faq-a">We load your catalogue, policies, tone and past conversations. Replies sound like your team from day one and keep improving with your feedback.</p></details>
+      <details class="faq-item rv"><summary><span class="faq-q">What happens when autodm is unsure?</span><span class="faq-plus">+</span></summary><p class="faq-a">It hands the chat to a human with full context. No guessing, no awkward replies.</p></details>
     </div>
     </div>
   </section>
@@ -320,28 +320,6 @@ const telegramChatId = import.meta.env.PUBLIC_TELEGRAM_CHAT_ID ?? "";
     <div class="giant">autodm</div>
     <div class="foot-base"><span>© 2026 autodm · Sales and support where your customers are</span><span>Instagram · Email · WhatsApp · Telegram · Chatbot · Shopify</span></div>
   </footer>
-
-  <button id="chat-fab" aria-label="Open chat">
-    <svg viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 11.5a8.5 8.5 0 0 1-8.5 8.5c-1.5 0-3-.4-4.2-1L3 20l1-5.3A8.5 8.5 0 1 1 21 11.5z"/></svg>
-    <span class="fab-dot"></span>
-  </button>
-  <div id="chat-pop" hidden>
-    <div class="cp-head">
-      <div class="cp-av">a</div>
-      <div class="cp-id"><b>autodm</b><span>Online · replies instantly</span></div>
-      <button id="chat-close" aria-label="Close chat">×</button>
-    </div>
-    <div class="cp-thread" id="cp-thread"></div>
-    <div class="cp-chips" id="cp-chips">
-      <button data-q="price">Pricing</button>
-      <button data-q="how">How it works</button>
-      <button data-q="human">Talk to a human</button>
-    </div>
-    <form class="cp-input" id="cp-form">
-      <input id="cp-text" placeholder="Write a message" aria-label="Write a message" autocomplete="off" />
-      <button type="submit" aria-label="Send message"><svg viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="22" y1="2" x2="11" y2="11"/><polygon points="22 2 15 22 11 13 2 9 22 2"/></svg></button>
-    </form>
-  </div>
 
   <script is:inline>
     const chat = document.getElementById('chat');
@@ -628,58 +606,6 @@ const telegramChatId = import.meta.env.PUBLIC_TELEGRAM_CHAT_ID ?? "";
         if (fill) fill.setAttribute('d', r.line + ' L560,180 L0,180 Z');
         if (dot) { dot.setAttribute('cx', r.dot[0]); dot.setAttribute('cy', r.dot[1]); }
       });
-    });
-
-    // ---------- floating chatbot widget ----------
-    const fab = document.getElementById('chat-fab');
-    const pop = document.getElementById('chat-pop');
-    const thread = document.getElementById('cp-thread');
-    const cpForm = document.getElementById('cp-form');
-    const cpText = document.getElementById('cp-text');
-    let greeted = false;
-    const ANSWERS = {
-      price: 'Plans are tailored by message volume and channels. Leave your work email in the form above and we will send a quote within a day.',
-      how: 'Connect your store and channels. We train autodm on your catalogue, policies and tone. Most teams go live within a week.',
-      human: 'Of course. Share your email in the form above and a human will reach out today.',
-    };
-    function cpAdd(html, cls) {
-      const d = document.createElement('div');
-      d.className = cls; d.innerHTML = html;
-      thread.appendChild(d);
-      thread.scrollTop = thread.scrollHeight;
-    }
-    function cpBot(text) {
-      const t = document.createElement('div');
-      t.className = 'typing';
-      t.innerHTML = '<i></i><i></i><i></i>';
-      thread.appendChild(t);
-      thread.scrollTop = thread.scrollHeight;
-      setTimeout(() => { t.remove(); cpAdd(esc(text), 'bubble me'); }, 1100);
-    }
-    function cpOpen() {
-      if (!pop) return;
-      pop.hidden = false;
-      if (!greeted) {
-        greeted = true;
-        setTimeout(() => cpBot('Hi there! I am the autodm demo bot. Ask me anything, or tap below.'), 500);
-      }
-    }
-    fab && fab.addEventListener('click', () => { if (pop.hidden) cpOpen(); else pop.hidden = true; });
-    const cpClose = document.getElementById('chat-close');
-    cpClose && cpClose.addEventListener('click', () => { pop.hidden = true; });
-    document.querySelectorAll('#cp-chips button').forEach((b) => {
-      b.addEventListener('click', () => {
-        cpAdd(esc(b.textContent), 'bubble them');
-        cpBot(ANSWERS[b.dataset.q] || ANSWERS.how);
-      });
-    });
-    cpForm && cpForm.addEventListener('submit', (ev) => {
-      ev.preventDefault();
-      const v = (cpText.value || '').trim();
-      if (!v) return;
-      cpText.value = '';
-      cpAdd(esc(v), 'bubble them');
-      cpBot('Noted. A human will pick this up shortly. For faster help, tap an option above.');
     });
   </script>
 
