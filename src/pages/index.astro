@@ -75,7 +75,6 @@ const telegramChatId = import.meta.env.PUBLIC_TELEGRAM_CHAT_ID ?? "";
       <button class="tab" data-ch="whatsapp" role="tab">WhatsApp</button>
       <button class="tab" data-ch="telegram" role="tab">Telegram</button>
       <button class="tab" data-ch="email" role="tab">Email</button>
-      <button class="tab" data-ch="chatbot" role="tab">Chatbot</button>
     </div>
 
     <div class="demo-grid">
@@ -104,18 +103,6 @@ const telegramChatId = import.meta.env.PUBLIC_TELEGRAM_CHAT_ID ?? "";
                 <span class="ig-ico"><svg viewBox="0 0 24 24" fill="none" stroke="#111" stroke-width="1.8"><rect x="3" y="3" width="18" height="18" rx="4"/><circle cx="8.5" cy="10" r="1.2" fill="#111" stroke="none"/><path d="M7 15c1 1.2 2.4 2 5 2s4-.8 5-2"/></svg></span>
                 <span class="ig-ico"><svg viewBox="0 0 24 24" fill="none" stroke="#111" stroke-width="1.8"><path d="M20.8 4.6a5.5 5.5 0 0 0-7.8 0L12 5.6l-1-1a5.5 5.5 0 0 0-7.8 7.8l1 1L12 21l7.8-7.6 1-1a5.5 5.5 0 0 0 0-7.8z"/></svg></span>
               </div>
-            </div>
-          </div>
-        </div>
-        <div class="webdemo" id="webdemo" hidden>
-          <div class="mini-site">
-            <div class="ms-nav"><b>glowhaus</b><span class="ms-links">shop · about · contact</span><span class="ms-cart">bag (1)</span></div>
-            <div class="ms-hero"><small>NEW IN</small><h4>Midnight Silk Serum</h4><p>1,899 · 4.8 stars · Medium Dewy in stock</p><span class="ms-btn">Add to bag</span></div>
-            <div class="ms-strip">Free shipping over 999 · Easy 30 day returns</div>
-            <div class="ms-grid"><div class="ms-tile">🧴</div><div class="ms-tile">💧</div><div class="ms-tile">✨</div></div>
-            <div class="ms-pop">
-              <div class="ms-head"><span class="ms-av">a</span><div><b>autodm</b><span>Online now</span></div></div>
-              <div class="ms-thread" id="ms-thread"></div>
             </div>
           </div>
         </div>
@@ -460,53 +447,12 @@ const telegramChatId = import.meta.env.PUBLIC_TELEGRAM_CHAT_ID ?? "";
         if (t.dataset.ch === channel) return;
         channel = t.dataset.ch;
         document.querySelectorAll('.tab').forEach((x) => x.classList.toggle('on', x === t));
-        const isBot = channel === 'chatbot';
-        document.querySelector('.phone-wrap').hidden = isBot;
-        document.getElementById('webdemo').hidden = !isBot;
-        if (isBot) { runId++; msId++; msPlay(); }
-        else {
-          screenEl.dataset.ch = channel;
-          headEl.innerHTML = HEADS[channel];
-          msId++;
-          runId++;
-          play();
-        }
+        screenEl.dataset.ch = channel;
+        headEl.innerHTML = HEADS[channel];
+        runId++;
+        play();
       });
     });
-    const MS_SCRIPT = [
-      { m: 'Hi! Looking for something? I can check stock, prices and returns.' },
-      { t: 'Is the serum good for combo skin?' },
-      { m: 'Yes. Medium Dewy suits combo skin best. 14 units left right now.' },
-      { t: 'Sold. Any code?' },
-      { m: 'FIRST10 takes 10% off. Tap to apply: glowhaus.co/checkout/FIRST10' },
-    ];
-    const msThread = document.getElementById('ms-thread');
-    let msId = 0;
-    async function msPlay() {
-      const id = ++msId;
-      msThread.innerHTML = '';
-      await wait(600);
-      for (const m of MS_SCRIPT) {
-        if (id !== msId || channel !== 'chatbot') return;
-        if (m.m) {
-          const t = document.createElement('div'); t.className = 'typing'; t.innerHTML = '<i></i><i></i><i></i>';
-          msThread.appendChild(t);
-          await wait(1500 + Math.random() * 500);
-          if (id !== msId || channel !== 'chatbot') return;
-          t.remove();
-          msThread.appendChild(el(esc(m.m), 'bubble me'));
-        } else {
-          await wait(1000);
-          if (id !== msId || channel !== 'chatbot') return;
-          msThread.appendChild(el(esc(m.t), 'bubble them'));
-        }
-        await wait(400);
-        if (id !== msId || channel !== 'chatbot') return;
-      }
-      await wait(7000);
-      if (id !== msId || channel !== 'chatbot') return;
-      msPlay();
-    }
     const cio = new IntersectionObserver((es) => es.forEach(e => { if (e.isIntersecting) { play(); cio.disconnect(); } }), { threshold: 0.1, rootMargin: '0px 0px 250px 0px' });
     chat && cio.observe(chat);
 
