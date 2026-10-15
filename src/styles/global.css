@@ -322,9 +322,15 @@ svg { display: block; }
 .dark-band .h2 .gray { color: #a39c8d; }
 .dark-band .lede { color: #b3aca0; }
 .dark-band .bcard { background: #171512; border-color: rgba(255,255,255,.13); box-shadow: none; }
-.dark-band .bcard:hover { transform: translateY(-4px); border-color: rgba(255,255,255,.28); }
+.dark-band .bcard:hover { transform: none; border-color: rgba(255,255,255,.13); }
 .dark-band .bcard h3 { color: #fff; }
 .dark-band .bcard p { color: #a8a29a; }
+
+/* why autodm: black cards on the light section */
+#benefits .bcard { background: #0d0d0d; border-color: #0d0d0d; }
+#benefits .b-eyebrow { color: #a39c8d; }
+#benefits .bcard h3 { color: #fff; }
+#benefits .bcard p { color: #a8a29a; }
 .integ { display: flex; flex-wrap: wrap; gap: 10px; margin: 26px 0 6px; }
 .integ div { background: #0d0d0d; color: #fff; border-radius: 12px; padding: 11px 18px; font-size: 13.5px; font-weight: 600; display: flex; gap: 9px; align-items: center; }
 .integ svg { width: 15px; height: 15px; }
