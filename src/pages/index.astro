@@ -321,6 +321,28 @@ const telegramChatId = import.meta.env.PUBLIC_TELEGRAM_CHAT_ID ?? "";
     <div class="foot-base"><span>© 2026 autodm · Sales and support where your customers are</span><span>Instagram · Email · WhatsApp · Telegram · Chatbot · Shopify</span></div>
   </footer>
 
+  <button id="chat-fab" aria-label="Open chat">
+    <svg viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 11.5a8.5 8.5 0 0 1-8.5 8.5c-1.5 0-3-.4-4.2-1L3 20l1-5.3A8.5 8.5 0 1 1 21 11.5z"/></svg>
+    <span class="fab-dot"></span>
+  </button>
+  <div id="chat-pop" hidden>
+    <div class="cp-head">
+      <div class="cp-av">a</div>
+      <div class="cp-id"><b>autodm</b><span>Online · replies instantly</span></div>
+      <button id="chat-close" aria-label="Close chat">×</button>
+    </div>
+    <div class="cp-thread" id="cp-thread"></div>
+    <div class="cp-chips" id="cp-chips">
+      <button data-q="price">Pricing</button>
+      <button data-q="how">How it works</button>
+      <button data-q="human">Talk to a human</button>
+    </div>
+    <form class="cp-input" id="cp-form">
+      <input id="cp-text" placeholder="Write a message" aria-label="Write a message" autocomplete="off" />
+      <button type="submit" aria-label="Send message"><svg viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="22" y1="2" x2="11" y2="11"/><polygon points="22 2 15 22 11 13 2 9 22 2"/></svg></button>
+    </form>
+  </div>
+
   <script is:inline>
     const chat = document.getElementById('chat');
     const track = document.getElementById('chat-track');
@@ -606,6 +628,58 @@ const telegramChatId = import.meta.env.PUBLIC_TELEGRAM_CHAT_ID ?? "";
         if (fill) fill.setAttribute('d', r.line + ' L560,180 L0,180 Z');
         if (dot) { dot.setAttribute('cx', r.dot[0]); dot.setAttribute('cy', r.dot[1]); }
       });
+    });
+
+    // ---------- floating chatbot widget ----------
+    const fab = document.getElementById('chat-fab');
+    const pop = document.getElementById('chat-pop');
+    const thread = document.getElementById('cp-thread');
+    const cpForm = document.getElementById('cp-form');
+    const cpText = document.getElementById('cp-text');
+    let greeted = false;
+    const ANSWERS = {
+      price: 'Plans are tailored by message volume and channels. Leave your work email in the form above and we will send a quote within a day.',
+      how: 'Connect your store and channels. We train autodm on your catalogue, policies and tone. Most teams go live within a week.',
+      human: 'Of course. Share your email in the form above and a human will reach out today.',
+    };
+    function cpAdd(html, cls) {
+      const d = document.createElement('div');
+      d.className = cls; d.innerHTML = html;
+      thread.appendChild(d);
+      thread.scrollTop = thread.scrollHeight;
+    }
+    function cpBot(text) {
+      const t = document.createElement('div');
+      t.className = 'typing';
+      t.innerHTML = '<i></i><i></i><i></i>';
+      thread.appendChild(t);
+      thread.scrollTop = thread.scrollHeight;
+      setTimeout(() => { t.remove(); cpAdd(esc(text), 'bubble me'); }, 1100);
+    }
+    function cpOpen() {
+      if (!pop) return;
+      pop.hidden = false;
+      if (!greeted) {
+        greeted = true;
+        setTimeout(() => cpBot('Hi there! I am the autodm demo bot. Ask me anything, or tap below.'), 500);
+      }
+    }
+    fab && fab.addEventListener('click', () => { if (pop.hidden) cpOpen(); else pop.hidden = true; });
+    const cpClose = document.getElementById('chat-close');
+    cpClose && cpClose.addEventListener('click', () => { pop.hidden = true; });
+    document.querySelectorAll('#cp-chips button').forEach((b) => {
+      b.addEventListener('click', () => {
+        cpAdd(esc(b.textContent), 'bubble them');
+        cpBot(ANSWERS[b.dataset.q] || ANSWERS.how);
+      });
+    });
+    cpForm && cpForm.addEventListener('submit', (ev) => {
+      ev.preventDefault();
+      const v = (cpText.value || '').trim();
+      if (!v) return;
+      cpText.value = '';
+      cpAdd(esc(v), 'bubble them');
+      cpBot('Noted. A human will pick this up shortly. For faster help, tap an option above.');
     });
   </script>
 
