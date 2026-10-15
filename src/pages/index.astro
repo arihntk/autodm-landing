@@ -213,21 +213,38 @@ const telegramChatId = import.meta.env.PUBLIC_TELEGRAM_CHAT_ID ?? "";
           </div>
           <div class="panel">
             <h4>Recent threads</h4>
-            <p>Live across channels</p>
+            <p>Live across channels · tap a row to read it</p>
+            <div class="tbl-filters">
+              <button class="tbl-f on" data-f="all">All</button>
+              <button class="tbl-f" data-f="Instagram">Instagram</button>
+              <button class="tbl-f" data-f="Email">Email</button>
+              <button class="tbl-f" data-f="WhatsApp">WhatsApp</button>
+              <button class="tbl-f" data-f="Telegram">Telegram</button>
+              <button class="tbl-f" data-f="Chatbot">Chatbot</button>
+            </div>
             <div class="table-wrap">
             <table class="table">
               <thead><tr><th>Customer</th><th>Channel</th><th>Intent</th><th>Outcome</th><th>Time</th></tr></thead>
               <tbody>
-                <tr><td><b>maya.skincare</b> · Mumbai</td><td>Instagram</td><td>Shade and shipping</td><td><span class="pill g">Sale · 1,899</span></td><td>41s</td></tr>
-                <tr><td><b>jordan@mail</b> · Order 8123</td><td>Email</td><td>Where is my order</td><td><span class="pill g">Resolved</span></td><td>12s</td></tr>
-                <tr><td><b>98200 00021</b> · Mumbai</td><td>WhatsApp</td><td>Bulk deal</td><td><span class="pill a">To human</span></td><td>1m</td></tr>
-                <tr><td><b>priya.tg</b> · Delhi</td><td>Telegram</td><td>Discount code</td><td><span class="pill g">Sale · 1,499</span></td><td>26s</td></tr>
-                <tr><td><b>visitor 4419</b> · Site</td><td>Chatbot</td><td>Return request</td><td><span class="pill p">Link clicked</span></td><td>19s</td></tr>
+                <tr data-ch="Instagram" data-t="maya"><td><b>maya.skincare</b> · Mumbai</td><td>Instagram</td><td>Shade and shipping</td><td><span class="pill g">Sale · 1,899</span></td><td>41s</td></tr>
+                <tr data-ch="Email" data-t="jordan"><td><b>jordan@mail</b> · Order 8123</td><td>Email</td><td>Where is my order</td><td><span class="pill g">Resolved</span></td><td>12s</td></tr>
+                <tr data-ch="WhatsApp" data-t="salon"><td><b>98200 00021</b> · Mumbai</td><td>WhatsApp</td><td>Bulk deal</td><td><span class="pill a">To human</span></td><td>1m</td></tr>
+                <tr data-ch="Telegram" data-t="priya"><td><b>priya.tg</b> · Delhi</td><td>Telegram</td><td>Discount code</td><td><span class="pill g">Sale · 1,499</span></td><td>26s</td></tr>
+                <tr data-ch="Chatbot" data-t="ret"><td><b>visitor 4419</b> · Site</td><td>Chatbot</td><td>Return request</td><td><span class="pill p">Link clicked</span></td><td>19s</td></tr>
               </tbody>
             </table>
             </div>
           </div>
         </div>
+      </div>
+    </div>
+    <div class="modal-ov" id="modal-ov" hidden>
+      <div class="modal" role="dialog" aria-modal="true">
+        <div class="modal-head">
+          <div><b id="modal-title">Thread</b><span id="modal-sub"></span></div>
+          <button class="modal-x" id="modal-x" aria-label="Close">×</button>
+        </div>
+        <div class="modal-thread" id="modal-thread"></div>
       </div>
     </div>
   </section>
@@ -443,6 +460,74 @@ const telegramChatId = import.meta.env.PUBLIC_TELEGRAM_CHAT_ID ?? "";
     }
     const nio = new IntersectionObserver((es) => es.forEach(e => { if (e.isIntersecting) { animCount(e.target); nio.unobserve(e.target); } }), { threshold: 0.5 });
     document.querySelectorAll('[data-count]').forEach(n => nio.observe(n));
+
+    // ---------- dashboard threads: filter plus transcript modal ----------
+    const TRANSCRIPTS = {
+      maya: { title: 'maya.skincare · Mumbai', sub: 'Instagram · Sale 1,899 · 41s', msgs: [
+        { t: 'hey!! is the Midnight Silk Serum back in stock' },
+        { m: 'Hi Maya! Yes, restocked this morning in all 3 shades. Want help picking yours' },
+        { t: 'yes please! combo skin, shade medium? plus shipping time to Mumbai' },
+        { m: 'Perfect. Medium Dewy suits combo skin best. 14 units left. Mumbai delivery in 2 to 3 days, free over 999.' },
+        { t: 'ordered!! thank you' },
+        { m: 'Order GH 8421 confirmed. Tracking here and on email. Talk soon.' },
+      ] },
+      jordan: { title: 'jordan@mail · Order 8123', sub: 'Email · Resolved · 12s', msgs: [
+        { t: 'Hi, where is my order 8123?' },
+        { m: 'Hi Jordan, order 8123 left our warehouse this morning. It reaches Mumbai in 2 days. Track it here: glowhaus.co/track/8123' },
+        { t: 'Perfect, thanks!' },
+      ] },
+      salon: { title: '98200 00021 · Mumbai', sub: 'WhatsApp · To human · 1m', msgs: [
+        { t: 'Hi, I run a salon. Need 200 units monthly. Best rate?' },
+        { m: 'Thanks! For 200 units monthly I can offer 18% off plus free shipping. Looping in our partnerships lead to confirm.' },
+        { s: 'Handed to Priya on your team with full context' },
+      ] },
+      priya: { title: 'priya.tg · Delhi', sub: 'Telegram · Sale 1,499 · 26s', msgs: [
+        { t: 'Any code for first order?' },
+        { m: 'Welcome! FIRST10 takes 10% off. Your link: glowhaus.co/checkout/FIRST10' },
+        { t: 'Ordered!' },
+      ] },
+      ret: { title: 'visitor 4419 · Site', sub: 'Chatbot · Link clicked · 19s', msgs: [
+        { t: 'I want to return my serum, shade too dark' },
+        { m: 'Sorry to hear that. I started your return. Prepaid pickup tomorrow, refund within 3 days of pickup. Swap to Medium Dewy instead?' },
+        { t: 'Yes please' },
+      ] },
+    };
+    const modalOv = document.getElementById('modal-ov');
+    const modalThread = document.getElementById('modal-thread');
+    function openThread(key) {
+      const d = TRANSCRIPTS[key];
+      if (!d || !modalOv) return;
+      document.getElementById('modal-title').textContent = d.title;
+      document.getElementById('modal-sub').textContent = d.sub;
+      modalThread.innerHTML = '';
+      d.msgs.forEach((m) => {
+        if (m.s) { modalThread.appendChild(el(esc(m.s), 'modal-sys')); }
+        else { modalThread.appendChild(el(esc(m.t || m.m), 'bubble ' + (m.m ? 'me' : 'them'))); }
+      });
+      modalOv.hidden = false;
+      document.body.style.overflow = 'hidden';
+    }
+    function closeModal() {
+      if (!modalOv) return;
+      modalOv.hidden = true;
+      document.body.style.overflow = '';
+    }
+    document.querySelectorAll('.table tbody tr').forEach((tr) => {
+      tr.addEventListener('click', () => openThread(tr.dataset.t));
+    });
+    const modalX = document.getElementById('modal-x');
+    modalX && modalX.addEventListener('click', closeModal);
+    modalOv && modalOv.addEventListener('click', (ev) => { if (ev.target === modalOv) closeModal(); });
+    document.addEventListener('keydown', (ev) => { if (ev.key === 'Escape') closeModal(); });
+    document.querySelectorAll('.tbl-f').forEach((b) => {
+      b.addEventListener('click', () => {
+        document.querySelectorAll('.tbl-f').forEach((x) => x.classList.toggle('on', x === b));
+        const f = b.dataset.f;
+        document.querySelectorAll('.table tbody tr').forEach((tr) => {
+          tr.classList.toggle('hide', f !== 'all' && tr.dataset.ch !== f);
+        });
+      });
+    });
   </script>
 
   <script is:inline define:vars={{ telegramBotToken, telegramChatId }}>
