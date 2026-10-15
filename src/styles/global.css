@@ -241,6 +241,12 @@ svg { display: block; }
 .tabs { display: flex; gap: 8px; justify-content: center; margin: 0 0 22px; flex-wrap: wrap; }
 .tab { appearance: none; border: 1px solid var(--line); background: #fff; border-radius: 999px; padding: 10px 24px; font-family: var(--sans); font-size: 14px; font-weight: 600; cursor: pointer; color: var(--ink); }
 .tab.on { background: #0d0d0d; color: #fff; border-color: #0d0d0d; }
+.frame-toggle { appearance: none; border: 1px dashed var(--line); background: transparent; border-radius: 999px; padding: 10px 20px; font-family: var(--mono); font-size: 12px; font-weight: 600; letter-spacing: .06em; cursor: pointer; color: var(--muted); }
+.frame-toggle.on { border-style: solid; border-color: #0d0d0d; color: #0d0d0d; }
+/* frameless preview: app UI only, no device chrome */
+.phone.frameless { background: #fff; box-shadow: var(--shadow-sm); border: 1px solid var(--line); border-radius: 26px; padding: 0; }
+.phone.frameless .island, .phone.frameless .ig-status { display: none; }
+.phone.frameless .screen { border-radius: 25px; }
 .bubble .ticks { float: right; font-size: 11px; font-weight: 700; letter-spacing: -2px; margin: 7px 0 0 8px; color: #53bdeb; }
 /* whatsapp chrome */
 .screen[data-ch="whatsapp"] .ig-head { background: #F0F2F5; }
