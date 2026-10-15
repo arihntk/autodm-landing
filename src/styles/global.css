@@ -216,8 +216,11 @@ svg { display: block; }
 .ig-active::before { content:""; width: 7px; height: 7px; border-radius: 99px; background: #31a24c; }
 .ig-tools { margin-left: auto; display: flex; gap: 14px; align-items: center; }
 .ig-tools svg { width: 22px; height: 22px; }
-.chat { flex: 1; overflow: hidden; overscroll-behavior: contain; padding: 14px 12px; background: #fff; min-height: 0; }
-.chat-track { display: flex; flex-direction: column; gap: 7px; min-height: 100%; will-change: transform; }
+.chat { flex: 1; overflow: hidden; overscroll-behavior: contain; padding: 14px 12px; background: #fff; min-height: 0; position: relative; }
+.chat::after { content: ""; position: absolute; left: 0; right: 0; bottom: 0; height: 26px; background: linear-gradient(transparent, #fff); pointer-events: none; }
+.screen[data-ch="whatsapp"] .chat::after { background: linear-gradient(transparent, #EFE9DE); }
+.screen[data-ch="telegram"] .chat::after { background: linear-gradient(transparent, #E8EBF0); }
+.chat-track { display: flex; flex-direction: column; gap: 7px; min-height: 100%; will-change: transform; padding-bottom: 10px; }
 .chat-track.smooth { transition: transform .5s cubic-bezier(.25,.7,.25,1); }
 .bubble { overflow-wrap: anywhere; }
 .date-chip { align-self: center; font-size: 11.5px; font-weight: 600; color: #737373; background: #f2f2f2; padding: 5px 12px; border-radius: 99px; margin-bottom: 6px; }
