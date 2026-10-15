@@ -258,27 +258,14 @@ svg { display: block; }
 .mail-time { margin-left: auto; font-size: 11px; color: #8e8e8e; flex: none; }
 .mail-sub { font-size: 13.5px; font-weight: 650; margin: 0 0 4px; }
 .mail-body { font-size: 13.5px; line-height: 1.5; color: #333; margin: 0; }
-/* telegram chrome: dark mode */
-.screen[data-ch="telegram"] .ig-status { background: #17212B; color: #fff; }
-.screen[data-ch="telegram"] .sig i { background: #fff; }
-.screen[data-ch="telegram"] .batt { border-color: #fff; }
-.screen[data-ch="telegram"] .batt::after { background: #fff; }
-.screen[data-ch="telegram"] .ig-head { background: #17212B; border-bottom-color: #0E1621; }
-.screen[data-ch="telegram"] .back { color: #fff; }
+/* telegram chrome: light mode */
 .screen[data-ch="telegram"] .avatar { background: #229ED9; }
-.screen[data-ch="telegram"] .ig-name { color: #fff; }
-.screen[data-ch="telegram"] .ig-active { color: #7F91A4; }
-.screen[data-ch="telegram"] .ig-tools svg { stroke: #8B9BA8; }
-.screen[data-ch="telegram"] .chat { background: #0E1621; }
-.screen[data-ch="telegram"] .date-chip { background: #242F3D; color: #B9C4CE; }
-.screen[data-ch="telegram"] .bubble.them { background: #182533; color: #fff; }
-.screen[data-ch="telegram"] .bubble.me { background: #2B5278; color: #fff; }
-.screen[data-ch="telegram"] .bubble .meta.ticks { color: #5CA8E0; }
-.screen[data-ch="telegram"] .typing { background: #2B5278; }
-.screen[data-ch="telegram"] .typing i { background: #fff; }
-.screen[data-ch="telegram"] .ig-input { background: #17212B; border-top-color: #0E1621; }
-.screen[data-ch="telegram"] .ig-input .field { background: #242F3D; border-color: #242F3D; color: #7F91A4; }
-.screen[data-ch="telegram"] .ig-ico svg { stroke: #8B9BA8; }
+.screen[data-ch="telegram"] .chat { background: #E8EBF0; }
+.screen[data-ch="telegram"] .bubble.them { background: #fff; }
+.screen[data-ch="telegram"] .bubble.me { background: #E2F7D5; color: #111; }
+.screen[data-ch="telegram"] .bubble .meta.ticks { color: #3390EC; }
+.screen[data-ch="telegram"] .typing { background: #E4E6EB; }
+.screen[data-ch="telegram"] .typing i { background: #8e8e8e; }
 
 /* browser + dashboard, minimal */
 .browser { background: #fff; border: 1px solid var(--line); border-radius: 18px; overflow: hidden; box-shadow: var(--shadow); min-width: 0; }
@@ -399,12 +386,12 @@ svg { display: block; }
 /* faq */
 .faq { display: grid; gap: 10px; margin-top: 8px; max-width: 880px; }
 .faq-item { background: #fff; border: 1px solid var(--line); border-radius: 16px; overflow: hidden; }
-.faq-item summary { list-style: none; cursor: pointer; display: flex; align-items: center; gap: 14px; padding: 18px 22px; font-weight: 650; font-size: 16px; }
+.faq-item summary { list-style: none; cursor: pointer; display: flex; align-items: center; gap: 14px; padding: 19px 22px; font-weight: 700; font-size: 17px; }
 .faq-item summary::-webkit-details-marker { display: none; }
-.faq-q { flex: 1; min-width: 0; color: #111; }
+.faq-q { flex: 1; min-width: 0; color: #111; letter-spacing: -0.01em; }
 .faq-plus { margin-left: auto; flex: none; width: 28px; height: 28px; border-radius: 99px; background: #f1ece1; display: grid; place-items: center; font-size: 19px; font-weight: 400; transition: transform .25s; }
 .faq-item[open] .faq-plus { transform: rotate(45deg); }
-.faq-a { margin: 0; padding: 0 22px 20px; color: var(--muted); font-size: 15px; line-height: 1.65; }
+.faq-a { margin: 0; padding: 0 22px 21px; color: #4f4b43; font-size: 15.5px; line-height: 1.65; }
 
 /* pricing/contact */
 .contact { text-align: center; padding: 84px 24px 96px; max-width: 820px; margin: 64px auto 0; }
