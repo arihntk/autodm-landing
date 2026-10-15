@@ -69,16 +69,22 @@ const telegramChatId = import.meta.env.PUBLIC_TELEGRAM_CHAT_ID ?? "";
   <section class="section" id="demo">
     <div class="kicker rv">1. Live demo · Instagram</div>
     <h2 class="h2 rv">Watch autodm sell like your best rep. <span class="gray">Real context. Real answers. Fast.</span></h2>
-    <p class="lede rv">A customer messages at midnight about a product. autodm pulls live stock, shipping, reviews and past orders, then answers, recommends, discounts and closes. No scripts. No waiting.</p>
+    <p class="lede rv">A customer messages at midnight about a product. autodm pulls live stock, shipping, reviews and past orders, then answers, recommends, discounts and closes. No scripts. No waiting. Switch tabs to see the same brain on every channel.</p>
+
+    <div class="tabs rv" role="tablist" aria-label="Channels">
+      <button class="tab on" data-ch="instagram" role="tab">Instagram</button>
+      <button class="tab" data-ch="whatsapp" role="tab">WhatsApp</button>
+      <button class="tab" data-ch="email" role="tab">Email</button>
+    </div>
 
     <div class="demo-grid">
       <div class="phone-col rv">
         <div class="phone-wrap">
           <div class="phone">
-            <div class="screen">
+            <div class="screen" data-ch="instagram">
               <div class="island"></div>
               <div class="ig-status"><span>9:41</span><span class="sicons"><span class="sig"><i></i><i></i><i></i></span><span class="batt"></span></span></div>
-              <div class="ig-head">
+              <div class="ig-head" id="chat-head">
                 <span class="back">‹</span>
                 <div class="avatar"><div class="avatar-inner">G</div></div>
                 <div class="ig-id">
@@ -299,19 +305,57 @@ const telegramChatId = import.meta.env.PUBLIC_TELEGRAM_CHAT_ID ?? "";
 
   <script is:inline>
     const chat = document.getElementById('chat');
-    const script = [
-      { from: 'date', text: 'Today' },
-      { from: 'them', text: 'hey!! is the Midnight Silk Serum back in stock' },
-      { from: 'me', text: 'Hi Maya! Yes, restocked this morning in all 3 shades. Want help picking yours' },
-      { from: 'them', text: 'yes please! combo skin, shade medium? plus shipping time to Mumbai' },
-      { from: 'me', text: 'Perfect. Medium Dewy suits combo skin best, loved in 2,300 plus reviews and matches your last order. 14 units left. Mumbai delivery in 2 to 3 days, free over 999.' },
-      { from: 'them', text: 'does it sit well under makeup? and returns?' },
-      { from: 'me', text: 'Yes. 92% say it layers cleanly under makeup. Easy 30 day returns with prepaid pickup' },
-      { from: 'them', text: 'ok sold. any 10% off? student budget' },
-      { from: 'me', text: 'Done. STUDENT10 applied, your total drops by 189. Reserved for 30 min. glowhaus.co/checkout/GH8421' },
-      { from: 'them', text: 'ordered!! thank you' },
-      { from: 'me', text: 'Order GH 8421 confirmed. Tracking here and on email. Talk soon.' },
-    ];
+    const headEl = document.getElementById('chat-head');
+    const screenEl = chat.closest('.screen');
+    const VERIFIED = '<svg width="14" height="14" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10" fill="#0095f6"/><path d="M8 12.5l2.5 2.5L16 9.5" stroke="#fff" stroke-width="2" fill="none" stroke-linecap="round"/></svg>';
+    const TOOLS = '<div class="ig-tools">'
+      + '<svg viewBox="0 0 24 24" fill="none" stroke="#111" stroke-width="1.8"><path d="M23 7l-7 5 7 5V7z"/><rect x="1" y="5" width="15" height="14" rx="2"/></svg>'
+      + '<svg viewBox="0 0 24 24" fill="none" stroke="#111" stroke-width="1.8"><path d="M22 16.9v3a2 2 0 0 1-2.2 2 19.8 19.8 0 0 1-8.6-3.1 19.5 19.5 0 0 1-6-6A19.8 19.8 0 0 1 2.1 4.2 2 2 0 0 1 4.1 2h3a2 2 0 0 1 2 1.7c.13.96.36 1.9.7 2.8a2 2 0 0 1-.45 2.1L8.1 9.9a16 16 0 0 0 6 6l1.3-1.3a2 2 0 0 1 2.1-.45c.9.34 1.84.57 2.8.7A2 2 0 0 1 22 16.9z"/></svg>'
+      + '</div>';
+    const HEADS = {
+      instagram: '<span class="back">‹</span>'
+        + '<div class="avatar"><div class="avatar-inner">G</div></div>'
+        + '<div class="ig-id"><div class="ig-name">glowhaus ' + VERIFIED + '</div><div class="ig-active">Active now</div></div>'
+        + TOOLS,
+      whatsapp: '<span class="back">‹</span>'
+        + '<div class="avatar"><div class="avatar-inner">G</div></div>'
+        + '<div class="ig-id"><div class="ig-name">glowhaus ' + VERIFIED + '</div><div class="ig-active">online</div></div>'
+        + TOOLS,
+      email: '<span class="back">‹</span>'
+        + '<div class="avatar" style="background:#0d0d0d"><div class="avatar-inner">G</div></div>'
+        + '<div class="ig-id"><div class="ig-name">Inbox</div><div class="ig-active">glowhaus support</div></div>'
+        + '<div class="ig-tools"><svg viewBox="0 0 24 24" fill="none" stroke="#111" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M17 3a2.8 2.8 0 1 1 4 4L7.5 20.5 2 22l1.5-5.5z"/></svg></div>',
+    };
+    const SCRIPTS = {
+      instagram: [
+        { date: 'Today' },
+        { them: 'hey!! is the Midnight Silk Serum back in stock' },
+        { me: 'Hi Maya! Yes, restocked this morning in all 3 shades. Want help picking yours' },
+        { them: 'yes please! combo skin, shade medium? plus shipping time to Mumbai' },
+        { me: 'Perfect. Medium Dewy suits combo skin best, loved in 2,300 plus reviews and matches your last order. 14 units left. Mumbai delivery in 2 to 3 days, free over 999.' },
+        { them: 'does it sit well under makeup? and returns?' },
+        { me: 'Yes. 92% say it layers cleanly under makeup. Easy 30 day returns with prepaid pickup' },
+        { them: 'ok sold. any 10% off? student budget' },
+        { me: 'Done. STUDENT10 applied, your total drops by 189. Reserved for 30 min. glowhaus.co/checkout/GH8421' },
+        { them: 'ordered!! thank you' },
+        { me: 'Order GH 8421 confirmed. Tracking here and on email. Talk soon.' },
+      ],
+      whatsapp: [
+        { date: 'Today' },
+        { them: 'hi! is the Midnight Silk Serum in stock in medium?' },
+        { me: 'Hi Maya! Yes, Medium Dewy is in stock. 14 units left. Want me to reserve one?' },
+        { them: 'yes please! how long to Mumbai?' },
+        { me: '2 to 3 days, free shipping over 999. Here is your link: glowhaus.co/checkout/GH8421' },
+        { them: 'ordered, thank you!' },
+        { me: 'Confirmed. Tracking will reach you here and on email.' },
+      ],
+      email: [
+        { date: 'Today' },
+        { mail: 1, who: 'Maya', ini: 'M', time: '9:12 AM', sub: 'Shade help for Midnight Silk Serum', body: 'Hi team, I have combo skin. Which shade suits me? Also, how long is delivery to Mumbai?' },
+        { mail: 1, brand: 1, who: 'glowhaus', ini: 'G', time: '9:13 AM', sub: 'Re: Shade help for Midnight Silk Serum', body: 'Hi Maya, Medium Dewy suits combo skin best. In stock now. Mumbai delivery takes 2 to 3 days with free shipping over 999. Just reply to order and I will reserve a unit.' },
+        { mail: 1, who: 'Maya', ini: 'M', time: '9:15 AM', sub: 'Re: Shade help for Midnight Silk Serum', body: 'Please reserve one. Placing my order now. Thanks!' },
+      ],
+    };
     function el(html, cls) { const d = document.createElement('div'); d.className = cls; d.innerHTML = html; return d; }
     function esc(s){ return s.replace(/&/g,'&amp;').replace(/</g,'&lt;'); }
     const isTouch = window.matchMedia('(pointer: coarse)').matches;
@@ -321,40 +365,65 @@ const telegramChatId = import.meta.env.PUBLIC_TELEGRAM_CHAT_ID ?? "";
         else { chat.scrollTo({ top: chat.scrollHeight, behavior: 'smooth' }); }
       } catch(e) { try { chat.scrollTop = chat.scrollHeight; } catch(_e) {} }
     }
-    function addMsg(m) {
-      if (m.from === 'date') { chat.appendChild(el(esc(m.text), 'date-chip')); }
-      else if (m.from === 'me') {
-        chat.appendChild(el(esc(m.text), 'bubble me'));
+    function addMail(m) {
+      const c = document.createElement('div'); c.className = 'mail-card';
+      c.innerHTML = '<div class="mail-top"><span class="mail-av' + (m.brand ? ' brand' : '') + '">' + esc(m.ini) + '</span>'
+        + '<span class="mail-name">' + esc(m.who) + '</span><span class="mail-time">' + esc(m.time) + '</span></div>'
+        + '<p class="mail-sub">' + esc(m.sub) + '</p><p class="mail-body">' + esc(m.body) + '</p>';
+      chat.appendChild(c);
+      smoothBottom();
+    }
+    function addMsg(m, ch) {
+      if (m.date) { chat.appendChild(el(esc(m.date), 'date-chip')); }
+      else if (m.mail) { addMail(m); return; }
+      else if (m.me) {
+        const meta = ch === 'whatsapp' ? '<span class="meta ticks">✓✓</span>' : '';
+        chat.appendChild(el(esc(m.text) + meta, 'bubble me'));
       } else {
         chat.appendChild(el(esc(m.text), 'bubble them'));
       }
       smoothBottom();
     }
+    function wait(ms) { return new Promise((r) => setTimeout(r, ms)); }
+    let channel = 'instagram';
     let runId = 0;
     async function play() {
       const id = ++runId;
+      const ch = channel;
       chat.innerHTML = '';
-      await new Promise(r => setTimeout(r, 250));
-      for (const m of script) {
-        if (id !== runId) return;
-        if (m.from === 'me') {
+      await wait(250);
+      for (const m of SCRIPTS[ch]) {
+        if (id !== runId || ch !== channel) return;
+        if (m.me || m.brand) {
           const t = document.createElement('div'); t.className = 'typing'; t.innerHTML = '<i></i><i></i><i></i>';
           chat.appendChild(t); smoothBottom();
-          await new Promise(r => setTimeout(r, 1900 + Math.random()*700));
-          if (id !== runId) return;
+          await wait(1900 + Math.random()*700);
+          if (id !== runId || ch !== channel) return;
           t.remove();
         } else {
-          await new Promise(r => setTimeout(r, 1100));
-          if (id !== runId) return;
+          await wait(1100);
+          if (id !== runId || ch !== channel) return;
         }
-        addMsg(m);
-        await new Promise(r => setTimeout(r, 500));
-        if (id !== runId) return;
+        addMsg(m, ch);
+        await wait(500);
+        if (id !== runId || ch !== channel) return;
       }
-      await new Promise(r => setTimeout(r, 8000));
-      if (id !== runId) return;
+      await wait(8000);
+      if (id !== runId || ch !== channel) return;
       play();
     }
+    headEl.innerHTML = HEADS.instagram;
+    document.querySelectorAll('.tab').forEach((t) => {
+      t.addEventListener('click', () => {
+        if (t.dataset.ch === channel) return;
+        channel = t.dataset.ch;
+        document.querySelectorAll('.tab').forEach((x) => x.classList.toggle('on', x === t));
+        screenEl.dataset.ch = channel;
+        headEl.innerHTML = HEADS[channel];
+        runId++;
+        play();
+      });
+    });
     const cio = new IntersectionObserver((es) => es.forEach(e => { if (e.isIntersecting) { play(); cio.disconnect(); } }), { threshold: 0.1, rootMargin: '0px 0px 250px 0px' });
     chat && cio.observe(chat);
 

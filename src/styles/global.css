@@ -234,6 +234,30 @@ svg { display: block; }
 .cam svg { width: 19px; height: 19px; }
 .ig-input .field { flex: 1; background: #fff; border: 1px solid #dbdbdb; border-radius: 99px; padding: 9px 15px; font-size: 13.5px; color: #8e8e8e; min-width: 0; }
 .ig-ico svg { width: 23px; height: 23px; flex: none; }
+/* channel tabs */
+.tabs { display: flex; gap: 8px; justify-content: center; margin: 0 0 22px; flex-wrap: wrap; }
+.tab { appearance: none; border: 1px solid var(--line); background: #fff; border-radius: 999px; padding: 10px 24px; font-family: var(--sans); font-size: 14px; font-weight: 600; cursor: pointer; color: var(--ink); }
+.tab.on { background: #0d0d0d; color: #fff; border-color: #0d0d0d; }
+.bubble .meta { display: block; margin-top: 4px; font-size: 10px; font-weight: 500; opacity: .7; }
+.bubble .meta.ticks { color: #53bdeb; opacity: 1; font-weight: 700; font-size: 12px; }
+/* whatsapp chrome */
+.screen[data-ch="whatsapp"] .ig-head { background: #F0F2F5; }
+.screen[data-ch="whatsapp"] .avatar { background: #00A884; }
+.screen[data-ch="whatsapp"] .chat { background: #EFE9DE; }
+.screen[data-ch="whatsapp"] .bubble.them { background: #fff; }
+.screen[data-ch="whatsapp"] .bubble.me { background: #D9FDD3; color: #111; }
+.screen[data-ch="whatsapp"] .typing { background: #D9FDD3; }
+.screen[data-ch="whatsapp"] .typing i { background: #667781; }
+/* email chrome */
+.screen[data-ch="email"] .ig-input { display: none; }
+.mail-card { background: #fff; border: 1px solid #e5e5e5; border-radius: 14px; padding: 12px 14px; animation: pop .5s ease; }
+.mail-top { display: flex; align-items: center; gap: 9px; margin-bottom: 6px; }
+.mail-av { width: 30px; height: 30px; border-radius: 99px; background: #0d0d0d; color: #fff; font-size: 13px; font-weight: 700; display: grid; place-items: center; flex: none; }
+.mail-av.brand { background: var(--purple); }
+.mail-name { font-size: 13px; font-weight: 700; }
+.mail-time { margin-left: auto; font-size: 11px; color: #8e8e8e; flex: none; }
+.mail-sub { font-size: 13.5px; font-weight: 650; margin: 0 0 4px; }
+.mail-body { font-size: 13.5px; line-height: 1.5; color: #333; margin: 0; }
 
 /* browser + dashboard, minimal */
 .browser { background: #fff; border: 1px solid var(--line); border-radius: 18px; overflow: hidden; box-shadow: var(--shadow); min-width: 0; }
