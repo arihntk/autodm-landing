@@ -511,6 +511,7 @@ const telegramChatId = import.meta.env.PUBLIC_TELEGRAM_CHAT_ID ?? "";
         if (m.s) { modalThread.appendChild(el(esc(m.s), 'modal-sys')); }
         else { modalThread.appendChild(el(esc(m.t || m.m), 'bubble ' + (m.m ? 'me' : 'them'))); }
       });
+    }
     function showModal() {
       if (!modalOv) return;
       modalOv.hidden = false;
