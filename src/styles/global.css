@@ -265,6 +265,28 @@ svg { display: block; }
 .screen[data-ch="telegram"] .bubble .ticks { color: #3390EC; }
 .screen[data-ch="telegram"] .typing { background: #E4E6EB; }
 .screen[data-ch="telegram"] .typing i { background: #8e8e8e; }
+/* website demo with corner popup */
+.webdemo[hidden] { display: none; }
+.mini-site { position: relative; background: #fff; border: 1px solid var(--line); border-radius: 20px; overflow: hidden; box-shadow: var(--shadow-sm); min-height: 560px; }
+.ms-nav { display: flex; align-items: center; gap: 12px; padding: 14px 18px; border-bottom: 1px solid var(--hairline); }
+.ms-nav b { font-size: 15px; letter-spacing: -0.02em; }
+.ms-links { color: var(--muted); font-size: 12px; }
+.ms-cart { margin-left: auto; font-size: 12px; font-weight: 700; background: #0d0d0d; color: #fff; border-radius: 99px; padding: 6px 12px; }
+.ms-hero { padding: 32px 24px 20px; }
+.ms-hero small { font-family: var(--mono); font-size: 11px; letter-spacing: .12em; color: var(--muted); }
+.ms-hero h4 { font-family: var(--display); font-weight: 400; font-size: 34px; margin: 8px 0; letter-spacing: -0.02em; }
+.ms-hero p { color: var(--muted); font-size: 14px; margin: 0 0 14px; }
+.ms-btn { display: inline-block; background: #0d0d0d; color: #fff; border-radius: 99px; padding: 10px 22px; font-size: 13px; font-weight: 600; }
+.ms-strip { margin: 0 24px 20px; background: #f6f2e9; border-radius: 12px; padding: 11px 16px; font-size: 12.5px; color: var(--muted); text-align: center; }
+.ms-grid { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 10px; padding: 0 24px 110px; }
+.ms-tile { background: #f6f2e9; border-radius: 12px; height: 84px; display: grid; place-items: center; font-size: 26px; }
+.ms-pop { position: absolute; right: 14px; bottom: 14px; width: min(272px, 82%); background: var(--cream); border: 1px solid var(--line); border-radius: 16px; overflow: hidden; box-shadow: 0 20px 50px -12px rgba(13,13,13,.35); }
+.ms-head { display: flex; align-items: center; gap: 8px; background: #0d0d0d; color: #fff; padding: 10px 12px; }
+.ms-av { width: 28px; height: 28px; border-radius: 99px; background: var(--purple); display: grid; place-items: center; font-weight: 800; font-size: 14px; flex: none; }
+.ms-head b { display: block; font-size: 13px; }
+.ms-head span { font-size: 11px; color: #a8a29a; }
+.ms-thread { padding: 12px 10px; display: flex; flex-direction: column; gap: 7px; background: #fff; min-height: 190px; }
+.ms-thread .bubble { font-size: 13px; }
 
 /* browser + dashboard, minimal */
 .browser { background: #fff; border: 1px solid var(--line); border-radius: 18px; overflow: hidden; box-shadow: var(--shadow); min-width: 0; position: relative; }
