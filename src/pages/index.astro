@@ -69,7 +69,6 @@ const telegramChatId = import.meta.env.PUBLIC_TELEGRAM_CHAT_ID ?? "";
   <section class="section" id="demo">
     <div class="kicker rv">1. Demo</div>
     <h2 class="h2 rv">Watch autodm sell like your best rep. <span class="gray">Real context. Real answers. Fast.</span></h2>
-    <p class="lede rv">A customer messages at midnight about a product. autodm pulls live stock, shipping, reviews and past orders, then answers, recommends, discounts and closes. No scripts. No waiting. Switch tabs to see the same brain on every channel.</p>
 
     <div class="tabs rv" role="tablist" aria-label="Channels">
       <button class="tab on" data-ch="instagram" role="tab">Instagram</button>
@@ -135,43 +134,48 @@ const telegramChatId = import.meta.env.PUBLIC_TELEGRAM_CHAT_ID ?? "";
   <section class="section" id="dashboard">
     <div class="kicker rv">2. Command center</div>
     <h2 class="h2 rv">Every conversation, click and sale. <span class="gray">In one place.</span></h2>
-    <p class="lede rv">The dashboard your team opens each morning. Volume, resolution, revenue and every thread across Instagram, email, WhatsApp, Telegram and site chat.</p>
 
     <div class="browser rv">
       <div class="browser-top">
         <div class="traffic"><i style="background:#ff5f57"></i><i style="background:#febc2e"></i><i style="background:#28c840"></i></div>
-        <div class="browser-title">autodm overview</div>
+        <div style="flex:1"></div>
         <div style="width:52px;flex:none"></div>
       </div>
       <div class="dash">
         <aside class="side">
           <div class="side-logo">autodm</div>
-          <div class="side-item on"><span class="sdot"></span>Overview</div>
-          <div class="side-item"><span class="sdot"></span>Inbox</div>
-          <div class="side-item"><span class="sdot"></span>Sources</div>
-          <div class="side-item"><span class="sdot"></span>Humans</div>
+          <div class="side-item on" data-view="overview"><span class="sdot"></span>Overview</div>
+          <div class="side-item" data-view="inbox"><span class="sdot"></span>Inbox</div>
+          <div class="side-item" data-view="sources"><span class="sdot"></span>Sources</div>
+          <div class="side-item" data-view="humans"><span class="sdot"></span>Humans</div>
           <div class="side-sec">CHANNELS</div>
-          <div class="side-item"><span class="sdot"></span>Instagram</div>
-          <div class="side-item"><span class="sdot"></span>Email</div>
-          <div class="side-item"><span class="sdot"></span>WhatsApp</div>
-          <div class="side-item"><span class="sdot"></span>Telegram</div>
-          <div class="side-item"><span class="sdot"></span>Chatbot</div>
-          <div class="side-status">Shopify connected</div>
+          <div class="side-item" data-f="Instagram"><span class="sdot"></span>Instagram</div>
+          <div class="side-item" data-f="Email"><span class="sdot"></span>Email</div>
+          <div class="side-item" data-f="WhatsApp"><span class="sdot"></span>WhatsApp</div>
+          <div class="side-item" data-f="Telegram"><span class="sdot"></span>Telegram</div>
+          <div class="side-item" data-f="Chatbot"><span class="sdot"></span>Chatbot</div>
+          <div class="side-status" data-view="sources">Shopify connected</div>
         </aside>
         <div class="main">
           <div class="main-head">
             <h3>Good evening, Glowhaus</h3>
             <span class="live">34 agents online</span>
           </div>
+          <div class="range-row">
+            <div class="range-tabs">
+              <button class="range on" data-r="30">Last 30 days</button>
+              <button class="range" data-r="7">Last 7 days</button>
+            </div>
+          </div>
           <div class="kpis">
-            <div class="kpi"><small>Total conversations</small><div class="n" data-count="18429">0</div><div class="d up">▲ 18.2% this month</div></div>
-            <div class="kpi"><small>Resolved by AI</small><div class="n"><span data-count="94.2" data-dec="1">0</span>%</div><div class="d up">▲ 3.1 pts · no human needed</div></div>
-            <div class="kpi"><small>Link clicks</small><div class="n" data-count="7812">0</div><div class="d up">▲ 24% · product links</div></div>
-            <div class="kpi"><small>Sales attributed</small><div class="n">$<span data-count="128.4" data-dec="1">0</span>k</div><div class="d warn">● 5.8% to humans</div></div>
+            <div class="kpi"><small>Total conversations</small><div class="n" id="k-conv" data-count="18429">0</div><div class="d up" id="k-conv-d">▲ 18.2% this month</div></div>
+            <div class="kpi"><small>Resolved by AI</small><div class="n"><span id="k-ai" data-count="94.2" data-dec="1">0</span>%</div><div class="d up" id="k-ai-d">▲ 3.1 pts · no human needed</div></div>
+            <div class="kpi"><small>Link clicks</small><div class="n" id="k-clicks" data-count="7812">0</div><div class="d up" id="k-clicks-d">▲ 24% · product links</div></div>
+            <div class="kpi"><small>Sales attributed</small><div class="n">$<span id="k-sales" data-count="128.4" data-dec="1">0</span>k</div><div class="d warn" id="k-sales-d">● 5.8% to humans</div></div>
           </div>
           <div class="grid2">
             <div class="panel">
-              <h4>Conversations · last 30 days</h4>
+              <h4 id="chart-title">Conversations · last 30 days</h4>
               <p>All channels · AI and escalated</p>
               <svg viewBox="0 0 560 180" width="100%" height="150" role="img" aria-label="Conversation volume chart">
                 <defs>
@@ -182,11 +186,11 @@ const telegramChatId = import.meta.env.PUBLIC_TELEGRAM_CHAT_ID ?? "";
                 <g stroke="#efeae0" stroke-width="1">
                   <line x1="0" y1="40" x2="560" y2="40"/><line x1="0" y1="80" x2="560" y2="80"/><line x1="0" y1="120" x2="560" y2="120"/>
                 </g>
-                <path d="M0,140 C40,132 60,110 90,108 C120,106 140,120 170,112 C200,104 220,70 250,68 C280,66 300,90 330,84 C360,78 380,50 410,48 C440,46 470,60 500,52 C525,46 545,30 560,28 L560,180 L0,180 Z" fill="url(#ag)"/>
-                <path d="M0,140 C40,132 60,110 90,108 C120,106 140,120 170,112 C200,104 220,70 250,68 C280,66 300,90 330,84 C360,78 380,50 410,48 C440,46 470,60 500,52 C525,46 545,30 560,28" fill="none" stroke="#7c4bc4" stroke-width="3" stroke-linecap="round"/>
-                <circle cx="410" cy="48" r="6" fill="#7c4bc4" stroke="#fff" stroke-width="3"/>
+                <path id="area-fill" d="M0,140 C40,132 60,110 90,108 C120,106 140,120 170,112 C200,104 220,70 250,68 C280,66 300,90 330,84 C360,78 380,50 410,48 C440,46 470,60 500,52 C525,46 545,30 560,28 L560,180 L0,180 Z" fill="url(#ag)"/>
+                <path id="area-line" d="M0,140 C40,132 60,110 90,108 C120,106 140,120 170,112 C200,104 220,70 250,68 C280,66 300,90 330,84 C360,78 380,50 410,48 C440,46 470,60 500,52 C525,46 545,30 560,28" fill="none" stroke="#7c4bc4" stroke-width="3" stroke-linecap="round"/>
+                <circle id="area-dot" cx="410" cy="48" r="6" fill="#7c4bc4" stroke="#fff" stroke-width="3"/>
               </svg>
-              <div class="chart-meta"><span>● <b>AI resolved</b> 17,364</span><span>● <b>Escalated</b> 1,065</span><span style="margin-left:auto">avg reply <b>8s</b></span></div>
+              <div class="chart-meta"><span>● <b>AI resolved</b> <span id="ch-ai">17,364</span></span><span>● <b>Escalated</b> <span id="ch-esc">1,065</span></span><span style="margin-left:auto">avg reply <b>8s</b></span></div>
             </div>
             <div class="panel">
               <h4>Where customers talk</h4>
@@ -194,27 +198,26 @@ const telegramChatId = import.meta.env.PUBLIC_TELEGRAM_CHAT_ID ?? "";
               <div class="donut-row">
                 <svg viewBox="0 0 120 120" width="104" height="104" style="flex:none">
                   <circle cx="60" cy="60" r="46" fill="none" stroke="#f0ece3" stroke-width="17"/>
-                  <circle cx="60" cy="60" r="46" fill="none" stroke="#111" stroke-width="17" stroke-dasharray="127.2 289" stroke-dashoffset="72" stroke-linecap="round"/>
-                  <circle cx="60" cy="60" r="46" fill="none" stroke="#8a8578" stroke-width="17" stroke-dasharray="52 289" stroke-dashoffset="-55.2" stroke-linecap="round"/>
-                  <circle cx="60" cy="60" r="46" fill="none" stroke="#16a34a" stroke-width="17" stroke-dasharray="43.4 289" stroke-dashoffset="-107.2" stroke-linecap="round"/>
-                  <circle cx="60" cy="60" r="46" fill="none" stroke="#229ED9" stroke-width="17" stroke-dasharray="34.7 289" stroke-dashoffset="-150.5" stroke-linecap="round"/>
-                  <circle cx="60" cy="60" r="46" fill="none" stroke="#9664d6" stroke-width="17" stroke-dasharray="31.8 289" stroke-dashoffset="-185.2" stroke-linecap="round"/>
+                  <circle class="seg" data-i="0" cx="60" cy="60" r="46" fill="none" stroke="#111" stroke-width="17" stroke-dasharray="127.2 289" stroke-dashoffset="72" stroke-linecap="round"/>
+                  <circle class="seg" data-i="1" cx="60" cy="60" r="46" fill="none" stroke="#8a8578" stroke-width="17" stroke-dasharray="52 289" stroke-dashoffset="-55.2" stroke-linecap="round"/>
+                  <circle class="seg" data-i="2" cx="60" cy="60" r="46" fill="none" stroke="#16a34a" stroke-width="17" stroke-dasharray="43.4 289" stroke-dashoffset="-107.2" stroke-linecap="round"/>
+                  <circle class="seg" data-i="3" cx="60" cy="60" r="46" fill="none" stroke="#229ED9" stroke-width="17" stroke-dasharray="34.7 289" stroke-dashoffset="-150.5" stroke-linecap="round"/>
+                  <circle class="seg" data-i="4" cx="60" cy="60" r="46" fill="none" stroke="#9664d6" stroke-width="17" stroke-dasharray="31.8 289" stroke-dashoffset="-185.2" stroke-linecap="round"/>
                   <text x="60" y="67" text-anchor="middle" font-size="19" font-weight="800" font-family="Inter,sans-serif">44%</text>
                 </svg>
                 <div class="legend">
-                  <span><i style="background:#111"></i>Instagram · 44%</span>
-                  <span><i style="background:#8a8578"></i>Email · 18%</span>
-                  <span><i style="background:#16a34a"></i>WhatsApp · 15%</span>
-                  <span><i style="background:#229ED9"></i>Telegram · 12%</span>
-                  <span><i style="background:#9664d6"></i>Chatbot · 11%</span>
+                  <span class="leg" data-i="0"><i style="background:#111"></i>Instagram · 44%</span>
+                  <span class="leg" data-i="1"><i style="background:#8a8578"></i>Email · 18%</span>
+                  <span class="leg" data-i="2"><i style="background:#16a34a"></i>WhatsApp · 15%</span>
+                  <span class="leg" data-i="3"><i style="background:#229ED9"></i>Telegram · 12%</span>
+                  <span class="leg" data-i="4"><i style="background:#9664d6"></i>Chatbot · 11%</span>
                 </div>
               </div>
               <p style="margin-top:12px">Median first reply <b style="color:#111">8s</b> · CSAT <b style="color:#111">4.8/5</b></p>
             </div>
           </div>
-          <div class="panel">
-            <h4>Recent threads</h4>
-            <p>Live across channels · tap a row to read it</p>
+          <div class="panel" id="threads-panel">
+            <p>Live across channels</p>
             <div class="tbl-filters">
               <button class="tbl-f on" data-f="all">All</button>
               <button class="tbl-f" data-f="Instagram">Instagram</button>
@@ -280,15 +283,6 @@ const telegramChatId = import.meta.env.PUBLIC_TELEGRAM_CHAT_ID ?? "";
       <div class="bcard rv"><div class="bicon" style="background:#e0f2fe"><svg viewBox="0 0 24 24" fill="none" stroke="#111" stroke-width="2"><circle cx="12" cy="12" r="3"/><path d="M12 2v3M12 19v3M2 12h3M19 12h3M4.9 4.9l2.1 2.1M17 17l2.1 2.1M19.1 4.9L17 7M7 17l-2.1 2.1"/></svg></div><div class="b-eyebrow">TEAM</div><h3>Your team, amplified</h3><p>One inbox for every channel, with summaries and smart handoffs. Less busywork, more selling.</p></div>
       <div class="bcard rv"><div class="bicon" style="background:#f1ece1"><svg viewBox="0 0 24 24" fill="#111"><path d="M12 2l2.2 6.6L21 11l-6.8 2.4L12 20l-2.2-6.6L3 11l6.8-2.4z"/></svg></div><div class="b-eyebrow">HUMANS</div><h3>People when it counts</h3><p>Tricky requests move to your team with full context attached. Automation first, humans always close by.</p></div>
     </div>
-    <div class="integ rv">
-      <div><svg viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="2" width="20" height="20" rx="5"/><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"/><line x1="17.5" y1="6.5" x2="17.51" y2="6.5"/></svg>Instagram DMs</div>
-      <div><svg viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>Email</div>
-      <div><svg viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6A19.79 19.79 0 0 1 2.12 4.18 2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72c.13.96.36 1.9.7 2.81a2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45c.91.34 1.85.57 2.81.7A2 2 0 0 1 22 16.92z"/></svg>WhatsApp</div>
-      <div><svg viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="22" y1="2" x2="11" y2="11"/><polygon points="22 2 15 22 11 13 2 9 22 2"/></svg>Telegram</div>
-      <div><svg viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 8V4H8"/><rect x="4" y="8" width="16" height="12" rx="2"/><path d="M2 14h2"/><path d="M20 14h2"/><path d="M15 13v2"/><path d="M9 13v2"/></svg>Website chatbot</div>
-      <div><svg viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 2 3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4z"/><line x1="3" y1="6" x2="21" y2="6"/><path d="M16 10a4 4 0 0 1-8 0"/></svg>Shopify</div>
-      <div><svg viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="7" height="7"/><rect x="14" y="3" width="7" height="7"/><rect x="14" y="14" width="7" height="7"/><rect x="3" y="14" width="7" height="7"/></svg>Custom data sources</div>
-    </div>
   </section>
 
   <section class="section" id="faq">
@@ -300,7 +294,6 @@ const telegramChatId = import.meta.env.PUBLIC_TELEGRAM_CHAT_ID ?? "";
       <details class="faq-item rv"><summary>Who decides what autodm may do?<span class="faq-plus">+</span></summary><p class="faq-a">You do. Choose what runs alone, what asks first, and what stays blocked, per channel and per action.</p></details>
       <details class="faq-item rv"><summary>How is autodm trained on my brand?<span class="faq-plus">+</span></summary><p class="faq-a">We load your catalogue, policies, tone and past conversations. Replies sound like your team from day one and keep improving with your feedback.</p></details>
       <details class="faq-item rv"><summary>What happens when autodm is unsure?<span class="faq-plus">+</span></summary><p class="faq-a">It hands the chat to a human with full context. No guessing, no awkward replies.</p></details>
-      <details class="faq-item rv"><summary>How long does setup take?<span class="faq-plus">+</span></summary><p class="faq-a">Days, not months. Connect your store and channels, review the training, and go live. Most brands launch within a week.</p></details>
     </div>
   </section>
 

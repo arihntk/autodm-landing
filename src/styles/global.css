@@ -285,7 +285,6 @@ svg { display: block; }
 .browser-top { display: flex; align-items: center; gap: 14px; padding: 13px 20px; border-bottom: 1px solid var(--hairline); background: #fbf9f4; }
 .traffic { display: flex; gap: 7px; flex: none; }
 .traffic i { width: 11px; height: 11px; border-radius: 99px; display: block; }
-.browser-title { flex: 1; text-align: center; font-size: 13px; font-weight: 600; color: #8a8578; }
 .dash { display: grid; grid-template-columns: 200px minmax(0,1fr); min-width: 0; }
 .side { border-right: 1px solid var(--hairline); padding: 20px 14px; background: #fcfbf7; display: flex; flex-direction: column; gap: 2px; min-width: 0; }
 .side-logo { font-weight: 800; font-size: 17px; letter-spacing: -0.03em; margin: 0 0 14px 10px; }
@@ -322,6 +321,23 @@ svg { display: block; }
 .table tbody tr { cursor: pointer; }
 .table tbody tr:hover td { background: #faf7f0; }
 .table tbody tr.hide { display: none; }
+/* dashboard range toggle */
+.range-row { display: flex; margin-bottom: 14px; }
+.range-tabs { display: flex; gap: 4px; background: #fff; border: 1px solid var(--line); border-radius: 999px; padding: 4px; }
+.range { appearance: none; border: 0; background: transparent; border-radius: 999px; padding: 7px 16px; font-family: var(--sans); font-size: 12.5px; font-weight: 600; cursor: pointer; color: #666; }
+.range.on { background: #0d0d0d; color: #fff; }
+/* donut hover */
+.seg { transition: stroke-width .2s; cursor: pointer; }
+.seg.hot { stroke-width: 23; }
+.leg { transition: color .2s; }
+.leg.hot { font-weight: 800; color: #111; }
+/* sidebar actions */
+.side-item, .side-status { cursor: pointer; }
+/* list modal rows */
+.mrow { display: flex; gap: 10px; align-items: flex-start; background: #fff; border: 1px solid var(--line); border-radius: 12px; padding: 11px 13px; }
+.mdot { width: 8px; height: 8px; border-radius: 99px; background: var(--green); flex: none; margin-top: 5px; }
+.mrow b { display: block; font-size: 13.5px; }
+.mrow small { color: var(--muted); font-size: 12.5px; }
 /* transcript modal */
 .modal-ov { position: fixed; inset: 0; z-index: 100; background: rgba(13,13,13,.45); display: grid; place-items: center; padding: 20px; }
 .modal-ov[hidden] { display: none; }
@@ -352,9 +368,9 @@ svg { display: block; }
 .bcard h3 { margin: 0 0 8px; font-size: 15.5px; font-weight: 700; }
 .bcard p { margin: 0; font-size: 14.5px; line-height: 1.6; color: var(--muted); }
 
-/* dark band: features section stands apart from the light sections */
-.dark-band { background: #0d0d0d; color: #fff; margin-top: 70px; padding: 78px 0; }
-.band-inner { max-width: 1240px; margin: 0 auto; padding: 0 28px; min-width: 0; }
+/* dark band: rounded glowing panel, distinct from the light sections */
+.dark-band { background: transparent; padding: 0 28px; margin-top: 70px; }
+.band-inner { max-width: 1240px; margin: 0 auto; padding: 78px 56px; min-width: 0; color: #fff; border-radius: 32px; background: radial-gradient(640px 320px at 12% 8%, rgba(150,100,214,.20), transparent 60%), radial-gradient(560px 300px at 88% 92%, rgba(255,75,30,.10), transparent 60%), #0d0d0d; }
 .dark-band .h2 { color: #fff; }
 .dark-band .h2 .gray { color: #a39c8d; }
 .dark-band .lede { color: #b3aca0; }
@@ -368,9 +384,6 @@ svg { display: block; }
 #benefits .b-eyebrow { color: #a39c8d; }
 #benefits .bcard h3 { color: #fff; }
 #benefits .bcard p { color: #a8a29a; }
-.integ { display: flex; flex-wrap: wrap; gap: 10px; margin: 26px 0 6px; }
-.integ div { background: #0d0d0d; color: #fff; border-radius: 12px; padding: 11px 18px; font-size: 13.5px; font-weight: 600; display: flex; gap: 9px; align-items: center; }
-.integ svg { width: 15px; height: 15px; }
 
 /* faq */
 .faq { display: grid; gap: 10px; margin-top: 8px; max-width: 880px; }
@@ -432,8 +445,8 @@ svg { display: block; }
   .fgrid { grid-template-columns: 1fr; }
   .contact { padding: 64px 18px 72px; }
   .channel-pills span { padding: 9px 15px; font-size: 13px; }
-  .band-inner { padding: 0 18px; }
-  .dark-band { padding: 60px 0; margin-top: 56px; }
+  .band-inner { padding: 56px 22px; border-radius: 24px; }
+  .dark-band { padding: 0 18px; margin-top: 56px; }
   .foot-base { padding: 14px 18px 20px; }
 }
 @media (max-width: 430px) {
