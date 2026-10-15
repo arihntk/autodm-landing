@@ -167,12 +167,10 @@ const telegramChatId = import.meta.env.PUBLIC_TELEGRAM_CHAT_ID ?? "";
           <div class="side-item" data-f="WhatsApp"><span class="sdot"></span>WhatsApp</div>
           <div class="side-item" data-f="Telegram"><span class="sdot"></span>Telegram</div>
           <div class="side-item" data-f="Chatbot"><span class="sdot"></span>Chatbot</div>
-          <div class="side-status" data-view="sources">Shopify connected</div>
         </aside>
         <div class="main">
           <div class="main-head">
             <h3>Good evening, Glowhaus</h3>
-            <span class="live">34 agents online</span>
           </div>
           <div class="range-row">
             <div class="range-tabs">
@@ -569,6 +567,7 @@ const telegramChatId = import.meta.env.PUBLIC_TELEGRAM_CHAT_ID ?? "";
         if (m.s) { modalThread.appendChild(el(esc(m.s), 'modal-sys')); }
         else { modalThread.appendChild(el(esc(m.t || m.m), 'bubble ' + (m.m ? 'me' : 'them'))); }
       });
+      showModal();
     }
     function showModal() {
       if (!modalOv) return;
@@ -603,7 +602,7 @@ const telegramChatId = import.meta.env.PUBLIC_TELEGRAM_CHAT_ID ?? "";
       b.addEventListener('click', () => setFilter(b.dataset.f));
     });
     function setSide(active) {
-      document.querySelectorAll('.side-item, .side-status').forEach((x) => x.classList.toggle('on', x === active));
+      document.querySelectorAll('.side-item').forEach((x) => x.classList.toggle('on', x === active));
     }
     const SOURCES = [
       ['Shopify', '2,140 products synced 2 min ago'],
@@ -621,7 +620,7 @@ const telegramChatId = import.meta.env.PUBLIC_TELEGRAM_CHAT_ID ?? "";
     document.querySelectorAll('.side-item[data-f]').forEach((s) => {
       s.addEventListener('click', () => { setSide(s); setFilter(s.dataset.f); });
     });
-    document.querySelectorAll('.side-item[data-view], .side-status[data-view]').forEach((s) => {
+    document.querySelectorAll('.side-item[data-view]').forEach((s) => {
       s.addEventListener('click', () => {
         setSide(s);
         const v = s.dataset.view;
