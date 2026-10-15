@@ -271,6 +271,31 @@ const telegramChatId = import.meta.env.PUBLIC_TELEGRAM_CHAT_ID ?? "";
     </div>
   </section>
 
+  <section class="section" id="roi">
+    <div class="kicker rv">5. Estimator</div>
+    <h2 class="h2 rv">What is your inbox <span class="gray">costing you?</span></h2>
+    <p class="lede rv">Move the sliders. See the hours and money autodm gives back each month.</p>
+    <div class="roi rv">
+      <div class="roi-controls">
+        <div class="roi-row">
+          <div class="roi-label"><span>Messages per month</span><b id="roi-msgs-val">8,000</b></div>
+          <input id="roi-msgs" type="range" min="500" max="50000" step="500" value="8000" aria-label="Messages per month" />
+        </div>
+        <div class="roi-row">
+          <div class="roi-label"><span>Support team size</span><b id="roi-team-val">4</b></div>
+          <input id="roi-team" type="range" min="1" max="20" step="1" value="4" aria-label="Support team size" />
+        </div>
+        <p class="roi-note">Simple estimate. Assumes 4 minutes per thread, 90% handled by autodm, typical agent cost.</p>
+      </div>
+      <div class="roi-out">
+        <div><b id="roi-hours">480</b><span>hours saved monthly</span></div>
+        <div><b id="roi-money">₹67k</b><span>salary cost avoided monthly</span></div>
+        <div><b id="roi-each">120</b><span>hours back per teammate</span></div>
+        <button class="btn" id="roi-copy">Copy estimate</button>
+      </div>
+    </div>
+  </section>
+
   <section class="section" id="faq">
     <div class="kicker rv">6. FAQ</div>
     <h2 class="h2 rv">Questions, <span class="gray">answered.</span></h2>
@@ -440,6 +465,41 @@ const telegramChatId = import.meta.env.PUBLIC_TELEGRAM_CHAT_ID ?? "";
     }
     const nio = new IntersectionObserver((es) => es.forEach(e => { if (e.isIntersecting) { animCount(e.target); nio.unobserve(e.target); } }), { threshold: 0.5 });
     document.querySelectorAll('[data-count]').forEach(n => nio.observe(n));
+
+    // ---------- roi estimator ----------
+    const roiMsgs = document.getElementById('roi-msgs');
+    const roiTeam = document.getElementById('roi-team');
+    function fmtINR(v) {
+      if (v >= 100000) { const l = v / 100000; return '₹' + (l >= 10 ? Math.round(l) : Math.round(l * 10) / 10) + 'L'; }
+      return '₹' + Math.round(v / 1000) + 'k';
+    }
+    function roiUpdate() {
+      if (!roiMsgs || !roiTeam) return;
+      const d = parseInt(roiMsgs.value, 10);
+      const t = parseInt(roiTeam.value, 10);
+      const hours = Math.round(d * 4 / 60 * 0.9);
+      const money = hours * 140;
+      document.getElementById('roi-msgs-val').textContent = d.toLocaleString('en-IN');
+      document.getElementById('roi-team-val').textContent = String(t);
+      document.getElementById('roi-hours').textContent = hours.toLocaleString('en-IN');
+      document.getElementById('roi-money').textContent = fmtINR(money);
+      document.getElementById('roi-each').textContent = Math.round(hours / t).toLocaleString('en-IN');
+    }
+    if (roiMsgs && roiTeam) {
+      roiMsgs.addEventListener('input', roiUpdate);
+      roiTeam.addEventListener('input', roiUpdate);
+      roiUpdate();
+    }
+    const roiCopy = document.getElementById('roi-copy');
+    roiCopy && roiCopy.addEventListener('click', async (ev) => {
+      const btn = ev.currentTarget;
+      const txt = 'With ' + roiMsgs.value + ' monthly messages, autodm saves about '
+        + document.getElementById('roi-hours').textContent + ' hours and '
+        + document.getElementById('roi-money').textContent + ' every month. Estimate by autodm.';
+      try { await navigator.clipboard.writeText(txt); btn.textContent = 'Copied'; }
+      catch (e) { btn.textContent = 'Copy failed'; }
+      setTimeout(() => { btn.textContent = 'Copy estimate'; }, 2000);
+    });
   </script>
 
   <script is:inline define:vars={{ telegramBotToken, telegramChatId }}>
