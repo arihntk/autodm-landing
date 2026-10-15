@@ -74,7 +74,6 @@ const telegramChatId = import.meta.env.PUBLIC_TELEGRAM_CHAT_ID ?? "";
       <button class="tab" data-ch="whatsapp" role="tab">WhatsApp</button>
       <button class="tab" data-ch="telegram" role="tab">Telegram</button>
       <button class="tab" data-ch="email" role="tab">Email</button>
-      <button class="frame-toggle" id="frame-toggle">No frame</button>
     </div>
 
     <div class="demo-grid">
@@ -82,8 +81,6 @@ const telegramChatId = import.meta.env.PUBLIC_TELEGRAM_CHAT_ID ?? "";
         <div class="phone-wrap">
           <div class="phone">
             <div class="screen" data-ch="instagram">
-              <div class="island"></div>
-              <div class="ig-status"><span>9:41</span><span class="sicons"><span class="sig"><i></i><i></i><i></i></span><span class="batt"></span></span></div>
               <div class="ig-head" id="chat-head">
                 <span class="back">‹</span>
                 <div class="avatar"><div class="avatar-inner">G</div></div>
@@ -454,13 +451,6 @@ const telegramChatId = import.meta.env.PUBLIC_TELEGRAM_CHAT_ID ?? "";
         runId++;
         play();
       });
-    });
-    const frameToggle = document.getElementById('frame-toggle');
-    const phoneEl = document.querySelector('.phone');
-    frameToggle && phoneEl && frameToggle.addEventListener('click', () => {
-      const off = phoneEl.classList.toggle('frameless');
-      frameToggle.classList.toggle('on', off);
-      frameToggle.textContent = off ? 'Framed' : 'No frame';
     });
     const cio = new IntersectionObserver((es) => es.forEach(e => { if (e.isIntersecting) { play(); cio.disconnect(); } }), { threshold: 0.1, rootMargin: '0px 0px 250px 0px' });
     chat && cio.observe(chat);
