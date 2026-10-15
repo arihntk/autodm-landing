@@ -396,8 +396,13 @@ svg { display: block; }
 .dark-band .bcard h3 { color: #fff; }
 .dark-band .bcard p { color: #a8a29a; }
 
-/* why autodm: black cards on the light section */
-#benefits .bcard { background: #0d0d0d; border-color: #0d0d0d; }
+/* light and tint bands: same panel language, different moods */
+.light-band { background: transparent; padding: 0 28px; margin-top: 70px; }
+.light-inner { background: #fffdf7; border: 1px solid var(--line); border-radius: 32px; padding: 78px 56px; box-shadow: 0 24px 70px -44px rgba(13,13,13,.28); }
+.tint-band { background: transparent; padding: 0 28px; margin-top: 70px; }
+.tint-inner { background: #ECE1F6; border-radius: 32px; padding: 78px 56px; }
+/* why cards: depth instead of flat */
+#benefits .bcard { background: linear-gradient(180deg,#221d18,#0d0d0d); border-color: rgba(255,255,255,.14); box-shadow: 0 24px 60px -24px rgba(124,75,196,.5); }
 #benefits .b-eyebrow { color: #a39c8d; }
 #benefits .bcard h3 { color: #fff; }
 #benefits .bcard p { color: #a8a29a; }
@@ -463,7 +468,9 @@ svg { display: block; }
   .contact { padding: 64px 18px 72px; }
   .channel-pills span { padding: 9px 15px; font-size: 13px; }
   .band-inner { padding: 56px 22px; border-radius: 24px; }
+  .light-inner, .tint-inner { padding: 56px 22px; border-radius: 24px; }
   .dark-band { padding: 0 18px; margin-top: 56px; }
+  .light-band, .tint-band { padding: 0 18px; margin-top: 56px; }
   .foot-base { padding: 14px 18px 20px; }
 }
 @media (max-width: 430px) {
