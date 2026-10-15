@@ -67,7 +67,7 @@ const telegramChatId = import.meta.env.PUBLIC_TELEGRAM_CHAT_ID ?? "";
   </section>
 
   <section class="section" id="demo">
-    <div class="kicker rv">1. Live demo · Instagram</div>
+    <div class="kicker rv">1. Demo</div>
     <h2 class="h2 rv">Watch autodm sell like your best rep. <span class="gray">Real context. Real answers. Fast.</span></h2>
     <p class="lede rv">A customer messages at midnight about a product. autodm pulls live stock, shipping, reviews and past orders, then answers, recommends, discounts and closes. No scripts. No waiting. Switch tabs to see the same brain on every channel.</p>
 
@@ -96,7 +96,7 @@ const telegramChatId = import.meta.env.PUBLIC_TELEGRAM_CHAT_ID ?? "";
                   <svg viewBox="0 0 24 24" fill="none" stroke="#111" stroke-width="1.8"><path d="M22 16.9v3a2 2 0 0 1-2.2 2 19.8 19.8 0 0 1-8.6-3.1 19.5 19.5 0 0 1-6-6A19.8 19.8 0 0 1 2.1 4.2 2 2 0 0 1 4.1 2h3a2 2 0 0 1 2 1.7c.13.96.36 1.9.7 2.8a2 2 0 0 1-.45 2.1L8.1 9.9a16 16 0 0 0 6 6l1.3-1.3a2 2 0 0 1 2.1-.45c.9.34 1.84.57 2.8.7A2 2 0 0 1 22 16.9z"/></svg>
                 </div>
               </div>
-              <div class="chat" id="chat" aria-live="polite"></div>
+              <div class="chat" id="chat" aria-live="polite"><div class="chat-track" id="chat-track"></div></div>
               <div class="ig-input">
                 <span class="cam"><svg viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2"><path d="M23 19a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h4l2-3h6l2 3h4a2 2 0 0 1 2 2z"/><circle cx="12" cy="13" r="4"/></svg></span>
                 <div class="field">Message...</div>
@@ -307,6 +307,7 @@ const telegramChatId = import.meta.env.PUBLIC_TELEGRAM_CHAT_ID ?? "";
 
   <script is:inline>
     const chat = document.getElementById('chat');
+    const track = document.getElementById('chat-track');
     const headEl = document.getElementById('chat-head');
     const screenEl = chat.closest('.screen');
     const VERIFIED = '<svg width="14" height="14" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10" fill="#0095f6"/><path d="M8 12.5l2.5 2.5L16 9.5" stroke="#fff" stroke-width="2" fill="none" stroke-linecap="round"/></svg>';
@@ -361,28 +362,27 @@ const telegramChatId = import.meta.env.PUBLIC_TELEGRAM_CHAT_ID ?? "";
     function el(html, cls) { const d = document.createElement('div'); d.className = cls; d.innerHTML = html; return d; }
     function esc(s){ return s.replace(/&/g,'&amp;').replace(/</g,'&lt;'); }
     const isTouch = window.matchMedia('(pointer: coarse)').matches;
+    if (!isTouch) track.classList.add('smooth');
     function smoothBottom() {
-      try {
-        if (isTouch) { chat.scrollTop = chat.scrollHeight; }
-        else { chat.scrollTo({ top: chat.scrollHeight, behavior: 'smooth' }); }
-      } catch(e) { try { chat.scrollTop = chat.scrollHeight; } catch(_e) {} }
+      const over = track.scrollHeight - chat.clientHeight;
+      track.style.transform = over > 0 ? 'translateY(' + (-over) + 'px)' : 'translateY(0px)';
     }
     function addMail(m) {
       const c = document.createElement('div'); c.className = 'mail-card';
       c.innerHTML = '<div class="mail-top"><span class="mail-av' + (m.brand ? ' brand' : '') + '">' + esc(m.ini) + '</span>'
         + '<span class="mail-name">' + esc(m.who) + '</span><span class="mail-time">' + esc(m.time) + '</span></div>'
         + '<p class="mail-sub">' + esc(m.sub) + '</p><p class="mail-body">' + esc(m.body) + '</p>';
-      chat.appendChild(c);
+      track.appendChild(c);
       smoothBottom();
     }
     function addMsg(m, ch) {
-      if (m.date) { chat.appendChild(el(esc(m.date), 'date-chip')); }
+      if (m.date) { track.appendChild(el(esc(m.date), 'date-chip')); }
       else if (m.mail) { addMail(m); return; }
       else if (m.me) {
         const meta = ch === 'whatsapp' ? '<span class="meta ticks">✓✓</span>' : '';
-        chat.appendChild(el(esc(m.text) + meta, 'bubble me'));
+        track.appendChild(el(esc(m.text) + meta, 'bubble me'));
       } else {
-        chat.appendChild(el(esc(m.text), 'bubble them'));
+        track.appendChild(el(esc(m.text), 'bubble them'));
       }
       smoothBottom();
     }
@@ -392,13 +392,14 @@ const telegramChatId = import.meta.env.PUBLIC_TELEGRAM_CHAT_ID ?? "";
     async function play() {
       const id = ++runId;
       const ch = channel;
-      chat.innerHTML = '';
+      track.innerHTML = '';
+      track.style.transform = 'translateY(0px)';
       await wait(250);
       for (const m of SCRIPTS[ch]) {
         if (id !== runId || ch !== channel) return;
         if (m.me || m.brand) {
           const t = document.createElement('div'); t.className = 'typing'; t.innerHTML = '<i></i><i></i><i></i>';
-          chat.appendChild(t); smoothBottom();
+          track.appendChild(t); smoothBottom();
           await wait(1900 + Math.random()*700);
           if (id !== runId || ch !== channel) return;
           t.remove();

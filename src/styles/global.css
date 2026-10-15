@@ -216,9 +216,9 @@ svg { display: block; }
 .ig-active::before { content:""; width: 7px; height: 7px; border-radius: 99px; background: #31a24c; }
 .ig-tools { margin-left: auto; display: flex; gap: 14px; align-items: center; }
 .ig-tools svg { width: 22px; height: 22px; }
-.chat { flex: 1; overflow-y: auto; overflow-x: hidden; scrollbar-width: none; -ms-overflow-style: none; -webkit-overflow-scrolling: touch; overscroll-behavior: contain; scroll-behavior: smooth; padding: 14px 12px; display: flex; flex-direction: column; gap: 7px; background: #fff; min-height: 0; }
-.chat::-webkit-scrollbar { display: none; }
-.chat > * { min-width: 0; }
+.chat { flex: 1; overflow: hidden; overscroll-behavior: contain; padding: 14px 12px; background: #fff; min-height: 0; }
+.chat-track { display: flex; flex-direction: column; gap: 7px; min-height: 100%; will-change: transform; }
+.chat-track.smooth { transition: transform .5s cubic-bezier(.25,.7,.25,1); }
 .bubble { overflow-wrap: anywhere; }
 .date-chip { align-self: center; font-size: 11.5px; font-weight: 600; color: #737373; background: #f2f2f2; padding: 5px 12px; border-radius: 99px; margin-bottom: 6px; }
 .bubble { max-width: 80%; padding: 10px 14px; border-radius: 22px; font-size: 14px; line-height: 1.42; animation: pop .5s ease; }
@@ -388,7 +388,7 @@ svg { display: block; }
   .bar-l6,.bar-l7,.bar-l8,.bar-r6,.bar-r7,.bar-r8 { width: 110px; }
   .section { padding: 56px 18px 8px; }
   .ctx-grid { grid-template-columns: 1fr; }
-  .chat { overflow: hidden; overscroll-behavior: auto; scroll-behavior: auto; -webkit-overflow-scrolling: auto; touch-action: pan-y; }
+  .chat { overscroll-behavior: auto; touch-action: pan-y; }
   .screen { height: 600px; max-height: none; }
   .main { padding: 14px; }
   .bgrid { grid-template-columns: 1fr; }
